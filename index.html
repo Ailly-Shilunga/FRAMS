@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FRAMS - School System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>School System - Truancy Tracker</h1>
+
+  <!-- Section to add new students -->
+  <section id="add-student-section">
+    <h2>Add Student</h2>
+    <form id="add-student-form">
+      <input type="text" id="student-name" placeholder="Student Name" required>
+      <input type="text" id="student-class" placeholder="Class (e.g. 10A)" required>
+      <input type="email" id="parent-email" placeholder="Parent Email" required>
+      <button type="submit">Add Student</button>
+    </form>
+  </section>
+
+  <!-- Section to display the list of students -->
+  <section id="student-list-section">
+    <h2>Students</h2>
+    <ul id="student-list"></ul>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
