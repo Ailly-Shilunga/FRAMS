@@ -27,6 +27,10 @@ h1{
 /* Card-like sections for form and list*/
 section {
     background: #FFFFFF;
+    background-image: url('assets/school background.jpg');
+    background-size: cover;           /* Make image cver the section*/
+    background-repeat: no-repeat;     /* No repeating */
+    background-position: center;     /* Center the image */
     margin: 2em 0;
     padding: 2em 2em 1.5em 2em;
     border-radius: 16px;
