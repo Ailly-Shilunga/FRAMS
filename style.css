@@ -60,7 +60,7 @@ form input, form button {
     margin: 0.4em auto 1em auto;
     padding: 0.85em;
     font-size: 1.07em;
-    border: 1.5px solid #FF9800;
+    border: 1.5px solid #222;
     border-radius: 7px;
     box-sizing: border-box;
     transition: border 0.2s, box-shadow 0.2s;
