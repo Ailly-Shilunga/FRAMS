@@ -26,7 +26,7 @@ h1 {
 /* Card-like sections for form and list */
 section {
     background: #FFFFFF;
-    background-image: url('assets/school background.jpg');
+    background-image: url('assets/bg.png.png');
     background-size: cover;           /* Make image cover the section */
     background-repeat: no-repeat;     /* No repeating */
     background-position: center;      /* Center the image */
@@ -85,8 +85,8 @@ form button {
 }
 
 form button:hover {
-    background: linear-gradient(90deg, #1976D2 0%, #FF9800 100%);
-    box-shadow: 0 2px 12px #1976D255;
+    background: linear-gradient(90deg, #1976D2)
+
 }
 
 /* Student list styles */
