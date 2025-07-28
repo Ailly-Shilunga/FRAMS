@@ -14,7 +14,7 @@ body {
 /* Main title style */
 h1 {
     color: #1976D2;
-    background: #FFFFFF;
+    background: #FF9800;
     padding: 1.2em 0.5em;
     margin: 0;
     width: 100vw;
@@ -69,12 +69,12 @@ form input, form button {
 form input:focus {
     border-color: #1976D2;
     outline: none;
-    box-shadow: 0 0 8px #FF980033;
+    box-shadow: 0 0 8px #FF9800;
     background: #f3f6fb;
 }
 
 form button {
-    background: linear-gradient(90deg, #FF9800 0%, #1976D2 100%);
+    background:(90deg, #FF9800 );
     color: #fff;
     font-weight: bold;
     border: none;
