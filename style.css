@@ -1,0 +1,127 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #1976D2 0%, #FF9800 100%);
+    margin: 0;
+    min-height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Main title style */
+h1 {
+    color: #FF9800;
+    background: #1976D2;
+    padding: 1.2em 0.5em;
+    margin: 0;
+    width: 100vw;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 2.2em;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.09);
+}
+
+/* Card-like sections for form and list */
+section {
+    background: #FFFFFF;
+    background-image: url('assets/school background.jpg');
+    background-size: cover;           /* Make image cover the section */
+    background-repeat: no-repeat;     /* No repeating */
+    background-position: center;      /* Center the image */
+    margin: 2em 0;
+    padding: 2em 2em 1.5em 2em;
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
+    max-width: 480px;
+    width: 95vw;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Optional: add a semi-transparent overlay for readability */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Section titles */
+h2 {
+    color: #1976D2;
+    margin-bottom: 1.2em;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+/* Form styles */
+form input, form button {
+    display: block;
+    width: 95%;
+    margin: 0.4em auto 1em auto;
+    padding: 0.85em;
+    font-size: 1.07em;
+    border: 1.5px solid #FF9800;
+    border-radius: 7px;
+    box-sizing: border-box;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+form input:focus {
+    border-color: #1976D2;
+    outline: none;
+    box-shadow: 0 0 8px #FF980033;
+    background: #f3f6fb;
+}
+
+form button {
+    background: linear-gradient(90deg, #FF9800 0%, #1976D2 100%);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.2s;
+    letter-spacing: 1px;
+    font-size: 1.1em;
+}
+
+form button:hover {
+    background: linear-gradient(90deg, #1976D2 0%, #FF9800 100%);
+    box-shadow: 0 2px 12px #1976D255;
+}
+
+/* Student list styles */
+ul#student-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+ul#student-list li {
+    padding: 1em;
+    border-bottom: 1.5px solid #1976D211;
+    color: #222;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 5px;
+}
+
+ul#student-list li:last-child {
+    border-bottom: none;
+}
+
+ul#student-list li:hover {
+    background: #FF980029;
+    color: #1976D2;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 600px) {
+    section {
+        padding: 1em;
+        max-width: 99vw;
+    }
+    h1 {
+        font-size: 1.2em;
+        padding: 0.8em 0.2em;
+    }
+}
