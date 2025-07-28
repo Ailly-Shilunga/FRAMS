@@ -14,7 +14,7 @@ body {
 /* Main title style */
 h1 {
     color: #1976D2;
-    background: #FF9800;
+    background: #FFFFFF;
     padding: 1.2em 0.5em;
     margin: 0;
     width: 100vw;
@@ -27,7 +27,6 @@ h1 {
 /* Card-like sections for form and list */
 section {
     background: #FFFFFF;
-    background-image: url('assets/bg.png.png');
     background-size: cover;           /* Make image cover the section */
     background-repeat: no-repeat;     /* No repeating */
     background-position: center;      /* Center the image */
