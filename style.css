@@ -125,3 +125,15 @@ ul#student-list li:hover {
         padding: 0.8em 0.2em;
     }
 }
+/* Schoo logo style*/
+.school-logo{
+    display: block;
+    margin: 2em auto 1em auto;
+    max-width: 120px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #222;
+    background: #fff;
+    padding: 00.5em;
+
+}
