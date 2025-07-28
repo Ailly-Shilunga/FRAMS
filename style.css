@@ -74,8 +74,8 @@ form input:focus {
 }
 
 form button {
-    background:(90deg, #FF9800 );
-    color: #fff;
+    background: linear-gradient(90deg, #FF9800 );
+    color: #1976D2;
     font-weight: bold;
     border: none;
     cursor: pointer;
