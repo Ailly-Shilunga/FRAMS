@@ -111,8 +111,8 @@ form input:focus {
     border-bottom: none;
   } 
 
-ul#student-list li: hover{
-    background: #FF980029:
+ul#student-list li:hover{
+    background: #FF980029;
     color: #1976D2;
 }
 
