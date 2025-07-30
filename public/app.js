@@ -59,3 +59,30 @@ function renderStudentList() {
     studentList.appendChild(li);
   });
 }
+const video = document.getElementById("webcam")
+const canvas = document.getElementById('snapshot')
+const context = canvas.getcontext('2d')
+
+navigator.mediaDevices.getUserMedia({ video: true})
+  .than(stream ,
+    video,srcObject = stream,
+  );
+  let capturedImage = '';
+
+document.getElementById('capture').addEventListener('click', () => {
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  capturedImage = canvas.toDataURL('image/png');
+  canvas.style.display = 'block';
+});
+
+document.getElementById('enrollForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const className = document.getElementById('class').value;
+  const email = document.getElementById('email').value;
+
+  const student = { name, class: className, email, face: capturedImage };
+  localStorage.setItem(`student_${name}`, JSON.stringify(student));
+  alert(`Saved ${name}'s data with captured face!`);
+});
+
