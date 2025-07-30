@@ -17,6 +17,28 @@
       <button type="submit">Add Student</button>
     </form>
   </section>
+  section id="add-student-section">
+    <h2>Add Student</h2>
+    <!-- Live webcam Preview -->
+    <video
+    id="webcam"
+    autoplay
+    playsiline
+    width="320"
+    height="240"
+    style="border:1px solid #ccc; margin-bottom:8px"
+  </video>
+</br>
+<!-- Capture Button (type="button" so it doesn't submit the form)-->
+<button type="button" id="capture" Capture Face</button></button>
+<br>
+<!-- Canvas to show the snapshot (hidden until capture)-->
+<canvas
+id="sanpshot"
+width="320"
+height="240"
+style="display:none; border:1px solid #ccc; margin:8px 0;">
+</canvas>
 
 
   <!-- Section to display the list of students -->
