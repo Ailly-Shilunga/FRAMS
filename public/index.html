@@ -9,53 +9,61 @@
     <img src="assets/logo.jpeg.jpg" alt="School Logo" class="school-logo">
    <h1>School System</h1>
    
-  <!-- Section to add new students -->
+  <!-- Section to add new students + Face -->
+  <section id="add-student-section"></section>
   <h2>Add Student</h2>
-<form id="add-student-form">
-      <input type="text" id="student-name" placeholder="Student Name" required>
-      <input type="text" id="student-class" placeholder="Class (e.g. 10A)" required>
-      <input type="email" id="parent-email" placeholder="Parent Email" required>
-      <button type="submit">Add Student</button>
-    </form>
-  </section>
-   
-    <!-- Live webcam Preview -->
-    <video
-    id="webcam"
-    autoplay
-    playsiline
-    width="320"
-    height="240"
-    style="border:1px solid #ccc; margin-bottom:8px"
-  </video>
-</br>
-<!-- Capture Button (type="button" so it doesn't submit the form)-->
-<button type="button" id="capture" Capture Face</button></button>
+ <!-- 1) Live Webcam Preview -->
+ <video
+ id="webcam"
+ autoplay
+ playsinline
+ width="320"
+ height="240"
+ style="border:1px solid #ccc; margin-bottom:8px;">
+</video>
 <br>
-<!-- Canvas to show the snapshot (hidden until capture)-->
+
+<!-- 2) Capture Button -->
+<button type="button" id="capture">📸 Capture Face</button>
+<br>
+
+<!-- 3) Canvas to Show Snapshot -->
 <canvas
-id="sanpshot"
-width="320"
-height="240"
-style="display:none; border:1px solid #ccc; margin:8px 0;">
+ id="snapshot"
+ width="320"
+ height="240"
+ style="display:none; border:1px solid #ccc; margin:8px 0;">
 </canvas>
 
-  <script src="app.js"></script>
-</body>
-</html>
-<video id="webcam" autoplay playsinline width="320" height="240"></video>
-<br>
-<button id="capture"> Capture face</button>
-<canvas id="snapshot" width="320" height="240" style="display:none"
-<br>
-<form id="enroll form"
-  <input type="text" id=" name" placeholder="Student Name" required
-  <input type="text" id="class" placehoolder="Class" required
-  <input type="text" id="email"  placeholder="Parent email" required
-  <button type="text" id="Submit"></button> 
+<!-- 4) Enrollment Form -->
+<form id="add-student-form">
+ <input
+   type="text"
+   id="student-name"
+   placeholder="Student Name"
+   required
+ />
+ <input
+   type="text"
+   id="student-class"
+   placeholder="Class (e.g. 10A)"
+   required
+ />
+ <input
+   type="email"
+   id="parent-email"
+   placeholder="Parent Email"
+   required
+ />
+ <button type="submit">Save Student</button>
 </form>
-  <!-- Section to display the list of students -->
-  <section id="student-list-section">
-    <h2>Students</h2>
-    <ul id="student-list"></ul>
-  </section>
+</section>
+
+<!-- Section to Display Enrolled Students -->
+<section id="student-list-section">
+<h2>Students</h2>
+<ul id="student-list"></ul>
+</section>
+
+<!-- Your Script -->
+<script src="app.js"></script>
