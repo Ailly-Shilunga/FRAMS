@@ -85,4 +85,44 @@ document.getElementById('enrollForm').addEventListener('submit', (e) => {
   localStorage.setItem(`student_${name}`, JSON.stringify(student));
   alert(`Saved ${name}'s data with captured face!`);
 });
+// Grab DOM elements
+const video       = document.getElementById('webcam');
+const canvas      = document.getElementById('snapshot');
+const captureBtn  = document.getElementById('capture');
+const form        = document.getElementById('add-student-form');
+const studentList = document.getElementById('student-list');
+
+// 1) Start webcam stream
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => video.srcObject = stream)
+  .catch(err => console.error('Webcam error:', err));
+
+// 2) Capture button → draw frame to canvas
+captureBtn.addEventListener('click', () => {
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.style.display = 'block';
+});
+
+// 3) Form submission → add student to list
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const name       = document.getElementById('student-name').value;
+  const studentCls = document.getElementById('student-class').value;
+  const email      = document.getElementById('parent-email').value;
+  const imgData    = canvas.toDataURL('image/png');
+
+  // Build list item
+  const li = document.createElement('li');
+  li.innerHTML = `
+    <img src="${imgData}" width="80" alt="snapshot" />
+    <strong>${name}</strong> — ${studentCls} (<em>${email}</em>)
+  `;
+  studentList.appendChild(li);
+
+  // Reset form & hide canvas
+  form.reset();
+  canvas.style.display = 'none';
+});
 

@@ -3,67 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <title>School System</title>
-  <link rel="stylesheet" href="style.css">
+  <linssssssssssk rel="stylesheet" href="style.css">
 </head>
 <body>
     <img src="assets/logo.jpeg.jpg" alt="School Logo" class="school-logo">
    <h1>School System</h1>
    
-  <!-- Section to add new students + Face -->
-  <section id="add-student-section"></section>
+ <!-- =========================== -->
+<!-- Add Student + Face Capture -->
+<!-- =========================== -->
+<section id="add-student-section">
   <h2>Add Student</h2>
- <!-- 1) Live Webcam Preview -->
- <video
- id="webcam"
- autoplay
- playsinline
- width="320"
- height="240"
- style="border:1px solid #ccc; margin-bottom:8px;">
-</video>
-<br>
 
-<!-- 2) Capture Button -->
-<button type="button" id="capture">📸 Capture Face</button>
-<br>
+  <!-- 1) Live Webcam Preview -->
+  <video
+    id="webcam"
+    autoplay
+    playsinline
+    width="320"
+    height="240"
+    style="border:1px solid #ccc; margin-bottom:8px;">
+  </video>
+  <br>
 
-<!-- 3) Canvas to Show Snapshot -->
-<canvas
- id="snapshot"
- width="320"
- height="240"
- style="display:none; border:1px solid #ccc; margin:8px 0;">
-</canvas>
+  <!-- 2) Capture Button -->
+  <button type="button" id="capture">📸 Capture Face</button>
+  <br>
 
-<!-- 4) Enrollment Form -->
-<form id="add-student-form">
- <input
-   type="text"
-   id="student-name"
-   placeholder="Student Name"
-   required
- />
- <input
-   type="text"
-   id="student-class"
-   placeholder="Class (e.g. 10A)"
-   required
- />
- <input
-   type="email"
-   id="parent-email"
-   placeholder="Parent Email"
-   required
- />
- <button type="submit">Save Student</button>
-</form>
+  <!-- 3) Canvas to Show Snapshot -->
+  <canvas
+    id="snapshot"
+    width="320"
+    height="240"
+    style="display:none; border:1px solid #ccc; margin:8px 0;">
+  </canvas>
+
+  <!-- 4) Enrollment Form -->
+  <form id="add-student-form">
+    <input
+      type="text"
+      id="student-name"
+      placeholder="Student Name"
+      required
+    />
+    <input
+      type="text"
+      id="student-class"
+      placeholder="Class (e.g. 10A)"
+      required
+    />
+    <input
+      type="email"
+      id="parent-email"
+      placeholder="Parent Email"
+      required
+    />
+    <button type="submit">Save Student</button>
+  </form>
 </section>
 
 <!-- Section to Display Enrolled Students -->
 <section id="student-list-section">
-<h2>Students</h2>
-<ul id="student-list"></ul>
+  <h2>Students</h2>
+  <ul id="student-list"></ul>
 </section>
 
 <!-- Your Script -->
-<script src="app.js"></script>
+<script src="app.js"></script> 
