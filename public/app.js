@@ -101,6 +101,7 @@ Promise.all([
 
 // 2) Populate the dropdown with existing students
 function populateStudentSelect() {
+  console.log ('Populating student dropdown...')
   const select = document.getElementById('student-select');
   const students = JSON.parse(localStorage.getItem('students') || '[]');
 
