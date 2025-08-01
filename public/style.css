@@ -175,3 +175,65 @@ ul#student-list li:hover {
     border-radius: 7px;
     font-size: 1.07em;
   }
+  /* Card container, same as #add-student-section */
+#register-face-section {
+    background: #ffffff;
+    padding: 2em;
+    margin: 2em auto;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  /* Section title */
+  #register-face-section h2 {
+    color: #1976D2;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  /* Dropdown styling */
+  #student-select {
+    width: 95%;
+    padding: 0.85em;
+    font-size: 1.07em;
+    border: 1.5px solid #222;
+    border-radius: 7px;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Video & canvas align center and margin */
+  #reg-webcam,
+  #reg-snapshot {
+    display: block;
+    margin: 0.5em auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Buttons with same gradient and hover as your form */
+  #start-camera,
+  #capture-face,
+  #register-face {
+    display: inline-block;
+    margin: 0.5em 0.5em 1em;
+    padding: 0.85em 1.2em;
+    font-size: 1.07em;
+    font-weight: bold;
+    color: #222;
+    background: linear-gradient(90deg, #FF9800, #FFB74D);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.2s;
+  }
+  
+  #start-camera:hover,
+  #capture-face:hover,
+  #register-face:hover {
+    background: linear-gradient(90deg, #1976D2, #63A4FF);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  }
