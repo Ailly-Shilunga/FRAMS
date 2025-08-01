@@ -90,4 +90,80 @@ form.addEventListener('submit', e => {
 window.addEventListener('DOMContentLoaded', () => {
   loadStudents();
   renderStudentList();
+});// — Face Registration Setup —
+
+// 1) Load face-api.js models
+Promise.all([
+  faceapi.nets.ssdMobilenetv1.loadFromUri('models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('models')
+]).then(populateStudentSelect);
+
+// 2) Populate the dropdown with existing students
+function populateStudentSelect() {
+  const select = document.getElementById('student-select');
+  const students = JSON.parse(localStorage.getItem('students') || '[]');
+
+  students.forEach(s => {
+    const option = document.createElement('option');
+    option.value = s.id;
+    option.textContent = s.name;
+    select.appendChild(option);
+  });
+}
+
+// 3) Start camera when clicked
+document.getElementById('start-camera').addEventListener('click', async () => {
+  const video            = document.getElementById('reg-webcam');
+  const captureBtn       = document.getElementById('capture-face');
+  const registerBtn      = document.getElementById('register-face');
+
+  // start stream
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  video.srcObject = stream;
+ 
+  // show controls
+  video.style.display      = 'block';
+  captureBtn.style.display = 'inline-block';
+});
+
+// 4) Capture face snapshot
+let regFaceImage = '';
+document.getElementById('capture-face').addEventListener('click', () => {
+  const video  = document.getElementById('reg-webcam');
+  const canvas = document.getElementById('reg-snapshot');
+  const btnReg = document.getElementById('register-face');
+
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  regFaceImage = canvas.toDataURL('image/png');
+
+  canvas.style.display = 'block';
+  btnReg.style.display = 'inline-block';
+});
+
+// 5) Compute descriptor & save to selected student
+document.getElementById('register-face').addEventListener('click', async () => {
+  const select   = document.getElementById('student-select');
+  const canvas   = document.getElementById('reg-snapshot');
+  const students = JSON.parse(localStorage.getItem('students') || '[]');
+  const student  = students.find(s => s.id == select.value);
+
+  // detect and get face descriptor
+  const detection = await faceapi
+    .detectSingleFace(canvas)
+    .withFaceLandmarks()
+    .withFaceDescriptor();
+
+  if (!detection) {
+    return alert('No face detected—please recapture.');
+  }
+
+  // store descriptor (array of numbers) + optional image
+  student.descriptor = Array.from(detection.descriptor);
+  student.face       = regFaceImage;
+
+  // persist
+  localStorage.setItem('students', JSON.stringify(students));
+  alert(`Registered face for ${student.name}!`);
 });
