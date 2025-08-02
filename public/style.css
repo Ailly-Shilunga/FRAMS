@@ -237,3 +237,49 @@ ul#student-list li:hover {
     color: #fff;
     box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
   }
+  /* Landing container */
+.landing-container {
+    text-align: center;
+    padding: 3em;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .landing-container h1 {
+    font-size: 2em;
+    color: #1976D2;
+    margin-bottom: 0.2em;
+  }
+  
+  .landing-container p {
+    margin-bottom: 2em;
+    font-size: 1.2em;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+  }
+  
+  .nav-btn {
+    display: inline-block;
+    width: 90%;
+    max-width: 320px;
+    padding: 1em;
+    background: linear-gradient(90deg, #FF9800, #FFB74D);
+    color: #222;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .nav-btn:hover {
+    background: linear-gradient(90deg, #1976D2, #63A4FF);
+    color: white;
+    transform: scale(1.03);
+  }
