@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Check-In</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="models/face-api.min.js"></script>
+  <script defer src="attendance.js"></script>
+</head>
+<body>
+  <div class="card-container">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h2>Student Check-In</h2>
+
+    <video id="checkin-webcam" width="320" height="240" autoplay muted style="border:1px solid #ccc; border-radius: 5px;"></video>
+    <p id="status-message">Initializing camera and facial recognition...</p>
+
+    <ul id="attendance-list"></ul>
+  </div>
+</body>
+</html>
