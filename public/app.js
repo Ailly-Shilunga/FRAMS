@@ -168,3 +168,13 @@ document.getElementById('register-face').addEventListener('click', async () => {
   localStorage.setItem('students', JSON.stringify(students));
   alert(`Registered face for ${student.name}!`);
 });
+const express = require('express');
+const app = express();
+const path = require('path');
+
+app.use(express.static('public')); // serve static files
+
+// Route root URL to dashboard
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
