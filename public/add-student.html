@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Student</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card-container">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h2>Add a New Student</h2>
+    <form id="add-student-form">
+      <input type="text" id="student-name" placeholder="Student Name" required />
+      <input type="text" id="student-class" placeholder="Class (e.g. 10A)" required />
+      <input type="email" id="parent-email" placeholder="Parent Email" required />
+      <button type="submit">Save Student</button>
+    </form>
+    <ul id="student-list"></ul>
+  </div>
+  <script src="add-student.js"></script>
+</body>
+</html>
