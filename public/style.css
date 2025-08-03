@@ -283,3 +283,52 @@ ul#student-list li:hover {
     color: white;
     transform: scale(1.03);
   }
+  .card-container {
+    background: #fff;
+    padding: 2em;
+    margin: 2em auto;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .card-container h2 {
+    color: #1976D2;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .card-container form input,
+  .card-container form button,
+  .card-container select {
+    width: 95%;
+    padding: 0.85em;
+    margin: 0.5em auto 1em;
+    font-size: 1em;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    display: block;
+  }
+  
+  .card-container button {
+    background: linear-gradient(90deg, #FF9800, #FFB74D);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .card-container button:hover {
+    background: linear-gradient(90deg, #1976D2, #63A4FF);
+    color: #fff;
+  }
+  
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1em;
+    color: #1976D2;
+    text-decoration: none;
+    font-weight: bold;
+  }s
