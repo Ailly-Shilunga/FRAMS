@@ -1,59 +1,61 @@
-// — DOM References —
-const video       = document.getElementById('webcam');
-const canvas      = document.getElementById('snapshot');
-const ctx         = canvas.getContext('2d');
-const captureBtn  = document.getElementById('capture');
-const form        = document.getElementById('add-student-form');
-const studentList = document.getElementById('student-list');
+/* app.js
+   ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+   1) Enrollment (Add Student)
+   2) Face Registration (Register Face for Existing Student)
+   3) [Attendance scanning stub—add later]
+*/
 
-let students     = [];
-let faceDataURL  = '';
+// ─── 1) ENROLLMENT: DOM References & Globals ───────────────────────────────────
+const enrollVideo       = document.getElementById('webcam');          // <video id="webcam">
+const snapshotCanvas    = document.getElementById('snapshot');       // <canvas id="snapshot">
+const snapshotCtx       = snapshotCanvas.getContext('2d');
+const captureEnrollBtn  = document.getElementById('capture');        // <button id="capture">
+const addStudentForm    = document.getElementById('add-student-form');// <form id="add-student-form">
+const studentListEl     = document.getElementById('student-list');   // <ul id="student-list">
 
-// — 1) Load saved students from localStorage —
+let students       = [];  // will hold {id, name, class, parentEmail, face?, descriptor?}
+let enrollFaceData = '';  // base64 from canvas snapshot
+
+// Load students from localStorage
 function loadStudents() {
   const saved = localStorage.getItem('students');
-  if (saved) {
-    students = JSON.parse(saved);
-  }
+  if (saved) students = JSON.parse(saved);
 }
- 
-// — 2) Render students to the page —
+
+// Render the list of enrolled students (with any face image they have)
 function renderStudentList() {
-  studentList.innerHTML = '';
+  studentListEl.innerHTML = '';
   if (students.length === 0) {
-    studentList.innerHTML = '<li>No students enrolled.</li>';
+    studentListEl.innerHTML = '<li>No students enrolled.</li>';
     return;
   }
   students.forEach(s => {
     const li = document.createElement('li');
     li.innerHTML = `
-      <img src="${s.face}" width="80" alt="snapshot">
-      <strong>${s.name}</strong> — ${s.class} <br>
+      <img src="${s.face || 'assets/placeholder.png'}" width="80" style="vertical-align:middle; margin-right:8px;">
+      <strong>${s.name}</strong> — ${s.class}<br>
       Parent: <em>${s.parentEmail}</em>
     `;
-    studentList.appendChild(li);
+    studentListEl.appendChild(li);
   });
 }
 
-// — 3) Start the webcam —
+// Start the webcam for enrollment
 navigator.mediaDevices
   .getUserMedia({ video: true })
-  .then(stream => {
-    video.srcObject = stream;
-  })
+  .then(stream => enrollVideo.srcObject = stream)
   .catch(err => console.error('Webcam error:', err));
 
-// — 4) Capture a frame when the button is clicked —
-captureBtn.addEventListener('click', () => {
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  faceDataURL = canvas.toDataURL('image/png');
-  canvas.style.display = 'block';
+// Capture snapshot for enrollment
+captureEnrollBtn.addEventListener('click', () => {
+  snapshotCtx.drawImage(enrollVideo, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+  enrollFaceData = snapshotCanvas.toDataURL('image/png');
+  snapshotCanvas.style.display = 'block';
 });
 
-// — 5) Handle form submission —
-form.addEventListener('submit', e => {
+// Handle the “Add Student” form submit
+addStudentForm.addEventListener('submit', e => {
   e.preventDefault();
-  
   const name        = document.getElementById('student-name').value.trim();
   const studentCls  = document.getElementById('student-class').value.trim();
   const parentEmail = document.getElementById('parent-email').value.trim();
@@ -61,120 +63,116 @@ form.addEventListener('submit', e => {
   if (!name || !studentCls || !parentEmail) {
     return alert('Please fill in all fields.');
   }
-  if (!faceDataURL) {
+  if (!enrollFaceData) {
     return alert('Please capture the student’s face.');
   }
 
-  // Build the student object
   const newStudent = {
     id:          Date.now(),
     name,
     class:       studentCls,
     parentEmail,
-    face:        faceDataURL
+    face:        enrollFaceData,
+    descriptor:  null     // to be set in face registration
   };
-
-  // Save it
   students.push(newStudent);
   localStorage.setItem('students', JSON.stringify(students));
 
-  // Reset UI
   alert(`✅ Saved ${name}!`);
-  form.reset();
-  canvas.style.display = 'none';
-  faceDataURL = '';
+  addStudentForm.reset();
+  snapshotCanvas.style.display = 'none';
+  enrollFaceData = '';
   renderStudentList();
 });
 
-// — 6) On initial load —
+// On page load, seed & render
 window.addEventListener('DOMContentLoaded', () => {
   loadStudents();
   renderStudentList();
-});// — Face Registration Setup —
+});
 
-// 1) Load face-api.js models
+
+
+// ─── 2) FACE REGISTRATION: DOM & Globals ─────────────────────────────────────
+const studentSelect    = document.getElementById('student-select');  // <select id="student-select">
+const startRegBtn      = document.getElementById('start-camera');    // <button id="start-camera">
+const regVideo         = document.getElementById('reg-webcam');      // <video id="reg-webcam">
+const captureRegBtn    = document.getElementById('capture-face');    // <button id="capture-face">
+const regCanvas        = document.getElementById('reg-snapshot');    // <canvas id="reg-snapshot">
+const regCtx           = regCanvas.getContext('2d');
+const registerFaceBtn  = document.getElementById('register-face');   // <button id="register-face">
+
+let registrationImage = '';
+
+// 2.1 Load face-api.js models, then populate the dropdown
 Promise.all([
   faceapi.nets.ssdMobilenetv1.loadFromUri('models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('models'),
   faceapi.nets.faceRecognitionNet.loadFromUri('models')
-]).then(populateStudentSelect);
+])
+.then(populateStudentDropdown)
+.catch(err => console.error('Model load failed:', err));
 
-// 2) Populate the dropdown with existing students
-function populateStudentSelect() {
-  console.log ('Populating student dropdown...')
-  const select = document.getElementById('student-select');
-  const students = JSON.parse(localStorage.getItem('students') || '[]');
-
-  students.forEach(s => {
-    const option = document.createElement('option');
-    option.value = s.id;
-    option.textContent = s.name;
-    select.appendChild(option);
+function populateStudentDropdown() {
+  studentSelect.innerHTML = '';
+  const list = JSON.parse(localStorage.getItem('students') || '[]');
+  if (list.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = 'No students available';
+    opt.disabled = true;
+    studentSelect.appendChild(opt);
+    return;
+  }
+  list.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.id;
+    opt.textContent = `${s.name} — ${s.class}`;
+    studentSelect.appendChild(opt);
   });
 }
 
-// 3) Start camera when clicked
-document.getElementById('start-camera').addEventListener('click', async () => {
-  const video            = document.getElementById('reg-webcam');
-  const captureBtn       = document.getElementById('capture-face');
-  const registerBtn      = document.getElementById('register-face');
-
-  // start stream
+// 2.2 Start webcam for registration
+startRegBtn.addEventListener('click', async () => {
   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  video.srcObject = stream;
- 
-  // show controls
-  video.style.display      = 'block';
-  captureBtn.style.display = 'inline-block';
+  regVideo.srcObject = stream;
+  regVideo.style.display      = 'block';
+  captureRegBtn.style.display = 'inline-block';
 });
 
-// 4) Capture face snapshot
-let regFaceImage = '';
-document.getElementById('capture-face').addEventListener('click', () => {
-  const video  = document.getElementById('reg-webcam');
-  const canvas = document.getElementById('reg-snapshot');
-  const btnReg = document.getElementById('register-face');
-
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  regFaceImage = canvas.toDataURL('image/png');
-
-  canvas.style.display = 'block';
-  btnReg.style.display = 'inline-block';
+// 2.3 Capture snapshot for registration
+captureRegBtn.addEventListener('click', () => {
+  regCtx.drawImage(regVideo, 0, 0, regCanvas.width, regCanvas.height);
+  registrationImage = regCanvas.toDataURL('image/png');
+  regCanvas.style.display      = 'block';
+  registerFaceBtn.style.display= 'inline-block';
 });
 
-// 5) Compute descriptor & save to selected student
-document.getElementById('register-face').addEventListener('click', async () => {
-  const select   = document.getElementById('student-select');
-  const canvas   = document.getElementById('reg-snapshot');
-  const students = JSON.parse(localStorage.getItem('students') || '[]');
-  const student  = students.find(s => s.id == select.value);
+// 2.4 Compute descriptor & save to selected student
+registerFaceBtn.addEventListener('click', async () => {
+  const list    = JSON.parse(localStorage.getItem('students') || '[]');
+  const student = list.find(s => s.id == studentSelect.value);
+  if (!student) return alert('Please select a student.');
 
-  // detect and get face descriptor
   const detection = await faceapi
-    .detectSingleFace(canvas)
+    .detectSingleFace(regCanvas)
     .withFaceLandmarks()
     .withFaceDescriptor();
 
   if (!detection) {
-    return alert('No face detected—please recapture.');
+    return alert('❌ No face detected—please try again.');
   }
 
-  // store descriptor (array of numbers) + optional image
   student.descriptor = Array.from(detection.descriptor);
-  student.face       = regFaceImage;
+  student.face       = registrationImage;
 
-  // persist
-  localStorage.setItem('students', JSON.stringify(students));
-  alert(`Registered face for ${student.name}!`);
+  localStorage.setItem('students', JSON.stringify(list));
+  alert(`✅ Face registered for ${student.name}!`);
+
+  regCanvas.style.display      = 'none';
+  registerFaceBtn.style.display= 'none';
 });
-const express = require('express');
-const app = express();
-const path = require('path');
 
-app.use(express.static('public')); // serve static files
 
-// Route root URL to dashboard
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+
+// ─── 3) ATTENDANCE (Placeholder) ────────────────────────────────────────────
+// Later: load descriptors, start attendance webcam, match faces, log timestamps.
