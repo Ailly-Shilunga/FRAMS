@@ -73,8 +73,9 @@ function populateStudentDropdown() {
   });
 }
 
-// ─── NAVIGATION LOGIC ────────────────────────────────────────
 function initNav() {
+  if (!navEnroll || !navRegister) return; // ✅ Prevent errors on pages without nav
+
   enrollSection.classList.remove('hidden');
   registerSection.classList.add('hidden');
 
@@ -197,3 +198,73 @@ document.addEventListener('DOMContentLoaded', () => {
   initEnrollment();
   initRegistration();
 });
+
+// live facial atttendance capture //
+const video = document.getElementById('video');
+    const log = document.getElementById('log');
+    let labeledDescriptors = [];
+
+    async function loadModels() {
+      await faceapi.nets.tinyFaceDetector.loadFromUri('models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('models');
+    }
+
+    function loadRegisteredFaces() {
+      const data = JSON.parse(localStorage.getItem('students')) || [];
+      return data
+        .filter(s => s.descriptor)
+        .map(s => new faceapi.LabeledFaceDescriptors(
+          s.name,
+          [new Float32Array(s.descriptor)]
+        ));
+    }
+
+    async function startVideo() {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+      video.srcObject = stream;
+    }
+
+    function logAttendance(name) {
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'entry';
+      entry.textContent = `${name} checked in at ${time}`;
+      log.appendChild(entry);
+
+      const records = JSON.parse(localStorage.getItem('attendanceLog')) || [];
+      records.push({ name, time });
+      localStorage.setItem('attendanceLog', JSON.stringify(records));
+    }
+
+    async function runRecognition() {
+      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
+      video.addEventListener('play', () => {
+        const canvas = faceapi.createCanvasFromMedia(video);
+        document.body.append(canvas);
+        const displaySize = { width: video.width, height: video.height };
+        faceapi.matchDimensions(canvas, displaySize);
+
+        setInterval(async () => {
+          const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks().withFaceDescriptors();
+          const resized = faceapi.resizeResults(detections, displaySize);
+          canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+          faceapi.draw.drawDetections(canvas, resized);
+
+          resized.forEach(detection => {
+            const match = faceMatcher.findBestMatch(detection.descriptor);
+            if (match.label !== 'unknown') {
+              logAttendance(match.label);
+            }
+          });
+        }, 2000);
+      });
+    }
+
+    (async () => {
+      await loadModels();
+      labeledDescriptors = loadRegisteredFaces();
+      await startVideo();
+      runRecognition();
+    })();

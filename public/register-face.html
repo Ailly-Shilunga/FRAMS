@@ -4,25 +4,28 @@
   <meta charset="UTF-8">
   <title>Register Face</title>
   <link rel="stylesheet" href="style.css">
-  
+
   <script defer src="https://unpkg.com/face-api.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
 
-  <header>
+  <!-- Header with logo and title -->
+  <header class="center-header">
+    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
     <h1>FRAMS</h1>
-    <nav>
-      <a href="index.html">🏠 Home</a>
-      <a href="add-student.html">➕ Add Student</a>
-      <a href="attendance.html">✅ Attendance</a>
-      <a href="student-list.html">📜 View Students</a>
-    </nav>
+    <p>Facial Recognition Attendance Management System</p>
   </header>
 
+  <!-- Back to Home Button -->
+  <div class="center-buttons">
+    <button onclick="location.href='index.html'">🏠 Back to Home</button>
+  </div>
+
   <main>
-    <section id="register-section">
+    <div class="form-card">
       <h2>Register Student Face</h2>
+
       <label>
         Select Student
         <select id="student-select"></select>
@@ -36,7 +39,7 @@
       <button id="start-camera">▶️ Start Camera</button>
       <button id="capture-face" class="hidden">📸 Capture Face</button>
       <button id="register-face" class="hidden">✅ Register Face</button>
-    </section>
+    </div>
   </main>
 
 </body>

@@ -2,30 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>All Students</title>
+  <title>FRAMS - Live Attendance</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="list.js"></script>
+  <script defer src="https://unpkg.com/face-api.js"></script>
 </head>
 <body>
 
-  <!-- Consistent Header -->
   <header class="center-header">
     <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
     <h1>FRAMS</h1>
-    <p>Facial Recognition Attendance Management System</p>
+    <p>Live Facial Attendance Capture</p>
   </header>
 
-  <!-- Back to Home Button -->
   <div class="center-buttons">
-    <button onclick="location.href='index.html'">🏠 Back to Home</button>
+    <button onclick="location.href='index.html'">🏠 Back Home</button>
   </div>
 
   <main>
     <div class="form-card">
-      <h2>Enrolled Students</h2>
-      <ul id="student-list"></ul>
+      <video id="video" width="720" height="560" autoplay muted></video>
+      <div id="log"></div>
     </div>
   </main>
-
 </body>
 </html>
