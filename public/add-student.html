@@ -4,19 +4,39 @@
   <meta charset="UTF-8">
   <title>Add Student</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="add-student.js"></script>
 </head>
 <body>
-  <div class="card-container">
-    <a href="index.html" class="back-link">← Back to Dashboard</a>
-    <h2>Add a New Student</h2>
+
+  <header>
+    <h1>FRAMS – Add Student</h1>
+  </header>
+
+  <main>
     <form id="add-student-form">
-      <input type="text" id="student-name" placeholder="Student Name" required />
-      <input type="text" id="student-class" placeholder="Class (e.g. 10A)" required />
-      <input type="email" id="parent-email" placeholder="Parent Email" required />
-      <button type="submit">Save Student</button>
+      <label for="student-name">Name</label>
+      <input type="text" id="student-name" required>
+
+      <label for="student-class">Class</label>
+      <input type="text" id="student-class" required>
+
+      <label for="parent-email">Parent Email</label>
+      <input type="email" id="parent-email" required>
+
+      <div class="camera">
+        <video id="enroll-webcam" autoplay muted></video>
+        <canvas id="enroll-snapshot" class="hidden"></canvas>
+      </div>
+
+      <button type="button" id="capture-enroll">📸 Capture Photo</button>
+      <button type="submit">💾 Save Student</button>
     </form>
-    <ul id="student-list"></ul>
-  </div>
-  <script src="add-student.js"></script>
+
+    <section>
+      <h2>Enrolled Students</h2>
+      <ul id="student-list"></ul>
+    </section>
+  </main>
+
 </body>
 </html>

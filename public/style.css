@@ -1,249 +1,57 @@
+/* Reset + base */
+* { box-sizing: border-box; margin:0; padding:0; }
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('assets/bg.png.png');
-    margin: 0;
-    min-height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background: url("assets/bg.png.png") no-repeat center center fixed;
+  background-size: cover;
 }
 
-/* Main title style */
-h1 {
-    color: #1976D2;
-    background: #FF9800;
-    padding: 1.2em 0.5em;
-    margin: 0;
-    width: 100vw;
-    text-align: center;
-    letter-spacing: 2px;
-    font-size: 2.2em;
-    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.09);
+/* Header */
+header {
+  background: #FFA500(0,122,204,0.85);
+  color:dodgerblue;
+  padding: 1rem;
+  text-align: center;
 }
 
-/* Card-like sections for form and list */
-section {
-    background: #FFFFFF;
-    background-size: cover;           /* Make image cover the section */
-    background-repeat: no-repeat;     /* No repeating */
-    background-position: center;      /* Center the image */
-    margin: 2em 0;
-    padding: 2em 2em 1.5em 2em;
-    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
-    max-width: 480px;
-    width: 95vw;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Optional: add a semi-transparent overlay for readability */
-    position: relative;
-    overflow: hidden;
+/* Main container */
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: rgba(255,255,255,0.9);
+  border-radius: 6px;
+  padding: 1.5rem;
 }
 
-/* Section titles */
-h2 {
-    color: #1976D2;
-    margin-bottom: 1.2em;
-    text-align: center;
-    font-size: 1.3em;
-    font-weight: bold;
+/* Form */
+form label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+input {
+  width: 100%; padding: 0.5rem; margin-bottom: 1rem;
+  border:1px solid #fff(204, 204, 204); border-radius:4px;
 }
 
-/* Form styles */
-form input, form button {
-    display: block;
-    width: 95%;
-    margin: 0.4em auto 1em auto;
-    padding: 0.85em;
-    font-size: 1.07em;
-    border: 1.5px solid #222;
-    border-radius: 7px;
-    box-sizing: border-box;
-    transition: border 0.2s, box-shadow 0.2s;
+/* Buttons */
+button {
+  background: #FFA500; color:#fff; border:#333;
+  padding:0.6rem 1.2rem; border-radius:4px; cursor:pointer;
+  transition: background 0.2s;
 }
+button:hover { background:dodgerblue; }
 
-form input:focus {
-    border-color: #1976D2;
-    outline: none;
-    box-shadow: 0 0 8px #FF9800;
-    background: #f3f6fb;
+/* Camera & snapshot */
+.camera { text-align:center; margin:1rem 0; }
+video, canvas {
+  width:320px; max-width:100%; border:1px solid #ccc; border-radius:4px;
 }
+.hidden { display:none; }
 
-form button {
-    background: linear-gradient(90deg, #FF9800 );
-    color: #222;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.2s;
-    letter-spacing: 1px;
-    font-size: 1.1em;
-}
-
-form button:hover {
-    background: linear-gradient(90deg, #1976D2)
-
-}
-
-/* Student list styles */
-ul#student-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
+/* Student list */
+ul#student-list { list-style:none; padding:0; }
 ul#student-list li {
-    padding: 1em;
-    border-bottom: 1.5px solid #1976D211;
-    color: #222;
-    transition: background 0.2s, color 0.2s;
-    border-radius: 5px;
+  display:flex; align-items:center; margin-bottom:0.8rem;
 }
-
-ul#student-list li:last-child {
-    border-bottom: none;
+ul#student-list img {
+  width:60px; height:60px; border-radius:50%; object-fit:cover;
+  margin-right:1rem;
 }
-
-ul#student-list li:hover {
-    background: #FF980029;
-    color: #1976D2;
-}
-
-/* Responsive for smaller screens */
-@media (max-width: 600px) {
-    section {
-        padding: 1em;
-        max-width: 99vw;
-    }
-    h1 {
-        font-size: 1.2em;
-        padding: 0.8em 0.2em;
-    }
-}
-/* School logo style */
-.school-logo{
-    display: block;
-    margin: 2em auto 1em auto;
-    max-width: 120px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #222;
-    background: #fff;
-    padding: 0.5em;
-
-}
-/* Ensure your student list items look like cards again */
-#student-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.8em;
-    padding: 1em;
-    border-bottom: 1.5px solid #1976D211;
-    transition: background 0.2s, color 0.2s;
-    border-radius: 5px;
-    list-style: none;
-  }
-  
-  /* Thumbnails of captured faces */
-  #student-list li img {
-    width: 80px;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* If your form lost its card style */
-  #add-student-section {
-    background: #fff;
-    padding: 2em;
-    margin: 2em auto;
-    max-width: 480px;
-    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
-    border-radius: 8px;
-  }
-  
-  /* Make sure your inputs & buttons still look right */
-  #add-student-form input,
-  #add-student-form button {
-    width: 95%;
-    margin: 0.4em auto 1em;
-    padding: 0.85em;
-    border-radius: 7px;
-    font-size: 1.07em;
-  }
-  /* Card container, same as #add-student-section */
-#register-face-section {
-    background: #ffffff;
-    padding: 2em;
-    margin: 2em auto;
-    max-width: 480px;
-    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.17);
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  /* Section title */
-  #register-face-section h2 {
-    color: #1976D2;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-  }
-  
-  /* Dropdown styling */
-  #student-select {
-    width: 95%;
-    padding: 0.85em;
-    font-size: 1.07em;
-    border: 1.5px solid #222;
-    border-radius: 7px;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-  }
-  
-  /* Video & canvas align center and margin */
-  #reg-webcam,
-  #reg-snapshot {
-    display: block;
-    margin: 0.5em auto;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Buttons with same gradient and hover as your form */
-  #start-camera,
-  #capture-face,
-  #register-face {
-    display: inline-block;
-    margin: 0.5em 0.5em 1em;
-    padding: 0.85em 1.2em;
-    font-size: 1.07em;
-    font-weight: bold;
-    color: #222;
-    background: linear-gradient(90deg, #FF9800, #FFB74D);
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.2s;
-  }
-  
-  #start-camera:hover,
-  #capture-face:hover,
-  #register-face:hover {
-    background: linear-gradient(90deg, #1976D2, #63A4FF);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
-  }
-  .loader {
-    border: 8px solid #eee;
-    border-top: 8px solid #1e69de;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-  }
-  

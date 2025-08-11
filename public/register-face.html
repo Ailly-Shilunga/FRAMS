@@ -2,22 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Register Student Face</title>
+  <title>Register Face</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="models/face-api.min.js"></script>
-  <script defer src="register-face.js"></script>
+  
+  <script defer src="https://unpkg.com/face-api.js"></script>
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <div class="card-container">
-    <a href="index.html" class="back-link">← Back to Dashboard</a>
-    <h2>Register Face for Existing Student</h2>
 
-<select id="student-select"></select>
-<button id="start-camera">Start Camera</button>
-<video id="reg-webcam" autoplay muted width="320" height="240" style="display:none;"></video>
-<button id="capture-face" style="display:none;">📸 Capture Face</button>
-<canvas id="reg-snapshot" width="320" height="240" style="display:none;"></canvas>
-<button id="register-face" style="display:none;">✅ Register Face</button>
-  </div>
+  <header>
+    <h1>FRAMS</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="add-student.html">➕ Add Student</a>
+      <a href="attendance.html">✅ Attendance</a>
+      <a href="student-list.html">📜 View Students</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="register-section">
+      <h2>Register Student Face</h2>
+      <label>
+        Select Student
+        <select id="student-select"></select>
+      </label>
+
+      <div class="camera">
+        <video id="reg-webcam" autoplay muted width="320" height="240" class="hidden"></video>
+        <canvas id="reg-snapshot" width="320" height="240" class="hidden"></canvas>
+      </div>
+
+      <button id="start-camera">▶️ Start Camera</button>
+      <button id="capture-face" class="hidden">📸 Capture Face</button>
+      <button id="register-face" class="hidden">✅ Register Face</button>
+    </section>
+  </main>
+
 </body>
 </html>
