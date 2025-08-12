@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FRAMS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="center-header">
+    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+    <h1>Welcome to FRAMS</h1>
+    <p>Facial Recognition Attendance Management System</p>
+  </header>
+<h2>Log In</h2>
+<form id="loginForm">
+  <input type="email" placeholder="Email" id="email" required>
+  <button type="submit">Log In</button>
+</form>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const emailInput = email.value;
+    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+    const teacher = teachers.find(t => t.email === emailInput && t.password === password.value);
+    if (teacher) {
+      localStorage.setItem("currentTeacher", JSON.stringify(teacher));
+      alert("Welcome, " + teacher.name + "!");
+      location.href = "class-attendance.html";
+    } else {
+      alert("No profile found. Please sign up first.");
+    }
+  });
+
+</script>
