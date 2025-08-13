@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a href="index.html" class="home-button">🏠Home
+    <a href="Teacher-dashboard.html" class="back-button">🔙Back</a>
+    
 
   <header class="center-header">
     <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
@@ -13,13 +16,11 @@
     <p>Facial Recognition Attendance Management System</p>
   </header>
 
-  <div class="center-buttons">
-    <button onclick="location.href='index.html'">🏠 Back Home</button>
-  </div>
-
+<header class= "center-header"></header>
 <h2>Log In</h2>
-<form id="loginForm">
-  <input type="email" placeholder="Email" id="email" required>
+<form id="Password">
+
+  <input type="password" placeholder="password" id="password" required>
   <button type="submit">Log In</button>
 </form>
 
@@ -31,7 +32,7 @@
     const teacher = teachers.find(t => t.email === emailInput && t.password === password.value);
     if (teacher) {
       localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-      alert("Welcome, " + teacher.name + "!");
+      alert("Welcome, " + titel.surname + "!");
       location.href = "class-attendance.html";
     } else {
       alert("No profile found. Please sign up first.");
