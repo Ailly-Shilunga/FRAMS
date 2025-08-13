@@ -127,3 +127,41 @@ ul#student-list img {
 .center-buttons button:hover {
   background: dodgerblue;
 }
+
+.home-button,
+.back-button {
+  position: absolute;
+  right: 20px;
+  background-color: orange;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.home-button {
+  top: 20px;
+}
+
+.back-button {
+  top: 20px; /* Just next to the Home button */
+}
+
+.home-button:hover,
+.back-button:hover {
+  background-color: orange;
+  transform: scale(1.05);
+}
+
+/* centered from*/
+.sign-up form{
+ background: rgba(255, 255, 255, 0.95);
+padding: 2rem;
+border-radius: 10px;
+box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+margin: 2rem auto;
+max-width: 500px;
+}
