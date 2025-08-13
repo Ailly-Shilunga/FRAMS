@@ -6,24 +6,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <header class="center-header">
+    <a href="index.html" class="home-button">🏠Home</a>
+    <button onclick="location.href='Teacher-dashboard.html'">🔙Back</button>
+  
+    <header class="center-header">
     <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
     <h1>Welcome to FRAMS</h1>
     <p>Facial Recognition Attendance Management System</p>
-  </header>
-  <div class="center-buttons">
-    <button onclick="location.href='index.html'">🏠 Back Home</button>
-  </div>
-  
+    
 <h2>Sign Up</h2>
+<link rel="stylesheet" href="style.css">
+
 <form id="signupForm">
+  <input type="text" placeholder="Titel" id="titel" required>
   <input type="text" placeholder="Name" id="name" required>
   <input type="text" placeholder="Surname" id="surname" required>
   <input type="email" placeholder="Email" id="email" required>
-  <input type="password" placeholder="Create Password" id="password" required>
   <input type="text" placeholder="Class (e.g. 9A)" id="class" required>
+  <input type="password" placeholder="Create Password" id="password" required>
+
   <button type="submit">Create Profile</button>
+  </div>
 </form>
 
 <script>
