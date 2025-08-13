@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FRAMS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="center-header">
+    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+    <h1>Welcome to FRAMS</h1>
+    <p>Facial Recognition Attendance Management System</p>
+  </header>
+  <h1>📚 Class Attendance Tracker</h1>
+
+  <label for="classSelect">Select Class:</label>
+  <select id="classSelect">
+    <option value="math">Math</option>
+    <option value="science">Science</option>
+    <option value="history">History</option>
+  </select>
+
+  <div id="studentList"></div>
+
+  <button onclick="saveAttendance()">✅ Save Attendance</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

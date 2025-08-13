@@ -2,8 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FRAMS Dashboard</title>
+  <title>Teacher Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .center-header {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: black;
+    }
+
+    .center-h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 1rem;
+      color: black;
+    }
+
+    .center-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .center-buttons button {
+      background: #007acc;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+      transition: background 0.3s;
+    }
+
+    .center-buttons button:hover {
+      background: orange;
+    }
+
+    .back-button {
+      background: orange;
+      margin-top: 2rem;
+    }
+
+    .back-button:hover {
+      background: dodgerblue;
+    }
+  </style>
 </head>
 <body>
 
@@ -12,6 +60,14 @@
     <h1>Welcome to FRAMS</h1>
     <p>Facial Recognition Attendance Management System</p>
   </header>
-<h1>Welcome to the Teacher Dashboard!</h1>
-<button onclick="location.href='teacher-signup.html'">Sign Up</button>
-<button onclick="location.href='teacher-login.html'">Log In</button>
+
+  <h1 class="center-h1">Teacher Dashboard</h1>
+
+  <div class="center-buttons">
+    <button onclick="location.href='teacher-signup.html'">📝 Sign Up</button>
+    <button onclick="location.href='teacher-login.html'">🔐 Log In</button>
+    <button class="back-button" onclick="location.href='index.html'">🔙 Back to Home</button>
+  </div>
+
+</body>
+</html>
