@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRAMS - Teacher Virtual Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Your existing styles */
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: url("assets/bg.png.png") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    /* Main container */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      background: rgba(255,255,255,0.9);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Logo & Header */
+    .center-header {
+      text-align: center;
+      padding: 1rem;
+      color:#333;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 1rem auto;
+      max-width: 100px;
+      height: auto;
+    }
+
+    /* Buttons */
+    button {
+      background: #FFA500; 
+      color:#fff; 
+      border: none;
+      padding:0.8rem 1.5rem; 
+      border-radius:6px; 
+      cursor:pointer;
+      transition: background 0.2s;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    button:hover { background:dodgerblue; }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #FFA500;
+      color: #FFA500;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 165, 0, 0.1);
+    }
+
+    /* Navigation */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .filter-group select, 
+    .filter-group input {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+    }
+
+    /* Attendance Grid */
+    .attendance-container {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .attendance-header {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+      background: #FFA500;
+      color: white;
+      padding: 0.8rem 1rem;
+      font-weight: bold;
+    }
+
+    .attendance-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .attendance-row {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+      padding: 0.8rem 1rem;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+
+    .attendance-row:hover {
+      background: rgba(255, 165, 0, 0.05);
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .student-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFA500;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .student-name {
+      font-weight: bold;
+    }
+
+    .student-id {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .status-present {
+      background: rgba(0, 128, 0, 0.15);
+      color: green;
+    }
+
+    .status-absent {
+      background: rgba(255, 0, 0, 0.15);
+      color: #c00;
+    }
+
+    .status-late {
+      background: rgba(255, 165, 0, 0.15);
+      color: #d35400;
+    }
+
+    .status-options {
+      display: flex;
+      gap: 6px;
+    }
+
+    .status-btn {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: none;
+      background: #f0f0f0;
+      color: #666;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .status-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .status-btn.active {
+      background: #FFA500;
+      color: white;
+    }
+
+    /* Summary Cards */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 1.5rem;
+    }
+
+    .summary-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      padding: 1.2rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      background: #FFA500;
+    }
+
+    .card-icon.absent { background: #c00; }
+    .card-icon.late { background: #d35400; }
+    .card-icon.total { background: #333; }
+
+    .card-content h3 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .card-content p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .attendance-header, 
+      .attendance-row {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+      .student-id {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .attendance-header, 
+      .attendance-row {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .attendance-header div:nth-child(2),
+      .attendance-row div:nth-child(2) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .attendance-header, 
+      .attendance-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .attendance-header div:nth-child(4),
+      .attendance-row div:nth-child(4) {
+        display: none;
+      }
+    }
+
+    /* Teacher info */
+    .teacher-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .teacher-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #FFA500;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .teacher-details {
+      flex: 1;
+    }
+
+    .teacher-details h3 {
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+
+    .teacher-details p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with logo -->
+  <header class="center-header">
+    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+    <h1>Teacher Virtual Register</h1>
+    <p>Facial Recognition Attendance Management System</p>
+  </header>
+
+  <main>
+    <!-- Teacher information -->
+    <div class="teacher-info">
+      <div class="teacher-avatar">AM</div>
+      <div class="teacher-details">
+        <h3>Ms. Ailly M.</h3>
+        <p>Computer Science Teacher | Logged in: Today at 8:15 AM</p>
+      </div>
+      <button class="btn-outline">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-group">
+        <label for="class-select">Class</label>
+        <select id="class-select">
+          <option value="cs101">CS 101 - Introduction to Programming</option>
+          <option value="cs201" selected>CS 201 - Data Structures</option>
+          <option value="cs301">CS 301 - Algorithms</option>
+          <option value="ai401">AI 401 - Machine Learning</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="date-select">Date</label>
+        <input type="date" id="date-select" value="2023-10-15">
+      </div>
+      
+      <div class="filter-group">
+        <label for="period-select">Period</label>
+        <select id="period-select">
+          <option value="1">Period 1 (8:00-9:30)</option>
+          <option value="2" selected>Period 2 (10:00-11:30)</option>
+          <option value="3">Period 3 (12:30-2:00)</option>
+          <option value="4">Period 4 (2:30-4:00)</option>
+        </select>
+      </div>
+      
+      <div class="filter-group" style="display: flex; align-items: flex-end;">
+        <button style="width: 100%;">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Attendance Grid -->
+    <div class="attendance-container">
+      <div class="attendance-header">
+        <div>Student</div>
+        <div>ID</div>
+        <div>Status</div>
+        <div>Last Seen</div>
+        <div>Mark</div>
+      </div>
+      
+      <div class="attendance-list">
+        <!-- Student 1 -->
+        <div class="attendance-row">
+          <div class="student-info">
+            <div class="student-avatar">JD</div>
+            <div>
+              <div class="student-name">John Doe</div>
+              <div class="student-id">SID-202301</div>
+            </div>
+          </div>
+          <div>SID-202301</div>
+          <div>
+            <span class="status status-present">Present</span>
+          </div>
+          <div>Today, 10:05 AM</div>
+          <div class="status-options">
+            <button class="status-btn active">P</button>
+            <button class="status-btn">A</button>
+            <button class="status-btn">L</button>
+          </div>
+        </div>
+        
+        <!-- Student 2 -->
+        <div class="attendance-row">
+          <div class="student-info">
+            <div class="student-avatar">AS</div>
+            <div>
+              <div class="student-name">Alex Smith</div>
+              <div class="student-id">SID-202302</div>
+            </div>
+          </div>
+          <div>SID-202302</div>
+          <div>
+            <span class="status status-absent">Absent</span>
+          </div>
+          <div>Oct 12, 2:30 PM</div>
+          <div class="status-options">
+            <button class="status-btn">P</button>
+            <button class="status-btn active">A</button>
+            <button class="status-btn">L</button>
+          </div>
+        </div>
+        
+        <!-- Student 3 -->
+        <div class="attendance-row">
+          <div class="student-info">
+            <div class="student-avatar">MJ</div>
+            <div>
+              <div class="student-name">Maria Johnson</div>
+              <div class="student-id">SID-202303</div>
+            </div>
+          </div>
+          <div>SID-202303</div>
+          <div>
+            <span class="status status-late">Late</span>
+          </div>
+          <div>Today, 10:25 AM</div>
+          <div class="status-options">
+            <button class="status-btn">P</button>
+            <button class="status-btn">A</button>
+            <button class="status-btn active">L</button>
+          </div>
+        </div>
+        
+        <!-- Student 4 -->
+        <div class="attendance-row">
+          <div class="student-info">
+            <div class="student-avatar">RW</div>
+            <div>
+              <div class="student-name">Robert Williams</div>
+              <div class="student-id">SID-202304</div>
+            </div>
+          </div>
+          <div>SID-202304</div>
+          <div>
+            <span class="status status-present">Present</span>
+          </div>
+          <div>Today, 10:02 AM</div>
+          <div class="status-options">
+            <button class="status-btn active">P</button>
+            <button class="status-btn">A</button>
+            <button class="status-btn">L</button>
+          </div>
+        </div>
+        
+        <!-- Student 5 -->
+        <div class="attendance-row">
+          <div class="student-info">
+            <div class="student-avatar">EB</div>
+            <div>
+              <div class="student-name">Emily Brown</div>
+              <div class="student-id">SID-202305</div>
+            </div>
+          </div>
+          <div>SID-202305</div>
+          <div>
+            <span class="status status-present">Present</span>
+          </div>
+          <div>Today, 10:01 AM</div>
+          <div class="status-options">
+            <button class="status-btn active">P</button>
+            <button class="status-btn">A</button>
+            <button class="status-btn">L</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-user-check"></i>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>24</h3>
+          <p>Students Present</p>
+        </div>
+      </div>
+      
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon absent">
+            <i class="fas fa-user-slash"></i>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>3</h3>
+          <p>Students Absent</p>
+        </div>
+      </div>
+      
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon late">
+            <i class="fas fa-clock"></i>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>2</h3>
+          <p>Students Late</p>
+        </div>
+      </div>
+      
+      <div class="summary-card">
+        <div class="card-header">
+          <div class="card-icon total">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>29</h3>
+          <p>Total Students</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: 15px; margin-top: 1.5rem;">
+      <button style="flex: 1;">
+        <i class="fas fa-save"></i> Save Attendance
+      </button>
+      <button class="btn-outline" style="flex: 1;">
+        <i class="fas fa-file-pdf"></i> Export to PDF
+      </button>
+      <button class="btn-outline" style="flex: 1;">
+        <i class="fas fa-camera"></i> Live Attendance
+      </button>
+    </div>
+  </main>
+  
+  <script>
+    // Initialize the page functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set today's date as default
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date-select').value = today;
+      
+      // Status button functionality
+      const statusButtons = document.querySelectorAll('.status-btn');
+      statusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from siblings
+          const siblings = Array.from(this.parentElement.children);
+          siblings.forEach(sib => sib.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Update the status display
+          const statusDisplay = this.closest('.attendance-row').querySelector('.status');
+          const statusText = this.textContent.trim();
+          
+          // Remove all status classes
+          statusDisplay.classList.remove('status-present', 'status-absent', 'status-late');
+          
+          // Add appropriate class
+          if (statusText === 'P') {
+            statusDisplay.textContent = 'Present';
+            statusDisplay.classList.add('status-present');
+          } else if (statusText === 'A') {
+            statusDisplay.textContent = 'Absent';
+            statusDisplay.classList.add('status-absent');
+          } else if (statusText === 'L') {
+            statusDisplay.textContent = 'Late';
+            statusDisplay.classList.add('status-late');
+          }
+        });
+      });
+      
+      // Refresh button functionality
+      document.querySelector('.filters button').addEventListener('click', function() {
+        alert('Attendance data refreshed successfully!');
+        // In a real app: fetch updated data from server
+      });
+      
+      // Live Attendance button
+      document.querySelectorAll('.btn-outline')[2].addEventListener('click', function() {
+        alert('Redirecting to Live Attendance page...');
+        // In a real app: window.location.href = 'live-attendance.html';
+      });
+      
+      // Save button
+      document.querySelector('button:first-child').addEventListener('click', function() {
+        alert('Attendance saved successfully!');
+        // In a real app: send data to server
+      });
+    });
+  </script>
+</body>
+</html>
