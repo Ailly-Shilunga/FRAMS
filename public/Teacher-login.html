@@ -4,39 +4,164 @@
   <meta charset="UTF-8">
   <title>FRAMS Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Top-right nav buttons */
+    .nav-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-button {
+      background-color: #ffffff;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-button:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.05);
+    }
+
+    /* Centered form container */
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .form-container {
+      width: 360px;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 1rem;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      background-color: orange;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .form-container button:hover {
+      background-color: #005fa3;
+    }
+
+    .toggle-container {
+      text-align: left;
+      font-size: 0.9rem;
+      color: #555;
+      margin: -4px 0 12px;
+    }
+
+    .forgot-link {
+      display: block;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: dodgerblue;
+      text-decoration: none;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .center-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 1rem auto;
+      max-height: 120px;
+    }
+  </style>
 </head>
 <body>
-    <a href="index.html" class="home-button">🏠Home
-    <a href="Login-signup.html" class="back-button">🔙Back</a>
-    
 
-  <header class="center-header">
-    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
-    <h1>Welcome to FRAMS</h1>
-    <p>Facial Recognition Attendance Management System</p>
-  </header>
+  <!-- Top-right buttons -->
+  <div class="nav-buttons">
+    <a href="index.html" class="nav-button">🏠 Home</a>
+    <a href="Teacher-dashboard.html" class="nav-button">🔙 Back</a>
+  </div>
 
-<header class= "center-header"></header>
-<h2>Log In</h2>
-<form id="Password">
+  <!-- Centered form and header -->
+  <div class="form-wrapper">
+    <header class="center-header">
+      <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+      <h1>Welcome to FRAMS</h1>
+      <p>Facial Recognition Attendance Management System</p>
+    </header>
 
-  <input type="password" placeholder="password" id="password" required>
-  <button type="submit">Log In</button>
-</form>
+    <div class="form-container">
+      <h2>🔐 Log In</h2>
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <div class="toggle-container">
+          <label>
+            <input type="checkbox" id="togglePassword"> Show Password
+          </label>
+        </div>
+        <button type="submit">Log In</button>
+        <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+      </form>
+    </div>
+  </div>
 
-<script>
-  document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const emailInput = email.value;
-    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-    const teacher = teachers.find(t => t.email === emailInput && t.password === password.value);
-    if (teacher) {
-      localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-      alert("Welcome, " + titel.surname + "!");
-      location.href = "class-attendance.html";
-    } else {
-      alert("No profile found. Please sign up first.");
-    }
-  });
+  <script>
+    // Show/hide password
+    document.getElementById("togglePassword").addEventListener("change", function() {
+      document.getElementById("password").type = this.checked ? "text" : "password";
+    });
 
-</script>
+    // Login logic with username + password
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const uname = document.getElementById("username").value.trim();
+      const pwd = document.getElementById("password").value.trim();
+      const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+      const teacher = teachers.find(t => t.username === uname && t.password === pwd);
+
+      if (teacher) {
+        localStorage.setItem("currentTeacher", JSON.stringify(teacher));
+        alert("Welcome, " + teacher.surname + "!");
+        location.href = "class-attendance.html";
+      } else {
+        alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
+      }
+    });
+  </script>
+</body>
+</html>
