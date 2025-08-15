@@ -108,28 +108,38 @@
     <div class="form-container">
       <h2>📝 Sign Up</h2>
       <form id="signupForm">
+      
         <input type="text" id="titel" placeholder="Title (e.g. Mr/Ms)" maxlength="10" required>
         <input type="text" id="name" placeholder="Name" required>
         <input type="text" id="surname" placeholder="Surname" required>
         <input type="email" id="email" placeholder="Email" required>
         <input type="text" id="class" placeholder="Class (e.g. 9A)" required>
         <input type="password" id="password" placeholder="Create Password" required>
+        <div class="toggle-container">
+          <label>
+            <input type="checkbox" id="togglePassword"> Show Password
+          </label>
         <button type="submit">Create Profile</button>
       </form>
     </div>
   </div>
 
   <script>
+     // Show/hide password
+     document.getElementById("togglePassword").addEventListener("change", function() {
+      document.getElementById("password").type = this.checked ? "text" : "password";
+    });
     document.getElementById("signupForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const teacher = {
-        titel: titel.value,
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        class: class.value,
-        password: password.value
-      };
+  titel: titel.value,
+  name: name.value,
+  surname: surname.value,
+  email: email.value,
+  class: class{value},
+  password: password.value,
+  username: `${titel.value}${name.value}`.replace(/\s+/g, '') // e.g. "MsAilly"
+};
       let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
       teachers.push(teacher);
       localStorage.setItem("teachers", JSON.stringify(teachers));

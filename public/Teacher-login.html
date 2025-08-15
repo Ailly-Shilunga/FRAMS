@@ -113,7 +113,7 @@
   <!-- Top-right buttons -->
   <div class="nav-buttons">
     <a href="index.html" class="nav-button">🏠 Home</a>
-    <a href="Teacher-dashboard.html" class="nav-button">🔙 Back</a>
+    <a href="Login-signup.html" class="nav-button">🔙 Back</a>
   </div>
 
   <!-- Centered form and header -->
@@ -149,14 +149,20 @@
     // Login logic with username + password
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const uname = document.getElementById("username").value.trim();
-      const pwd = document.getElementById("password").value.trim();
-      const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-      const teacher = teachers.find(t => t.username === uname && t.password === pwd);
+      const username = document.getElementById("username").value.trim();
+const pwd = document.getElementById("password").value.trim();
+const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+const existing = teachers.find(t => t.username === newUsername);
+if (existing) {
+  alert("Username already taken. Please choose another.");
+  return;
+}
+const teacher = teachers.find(t => t.username === uname && t.password === pwd);
+
 
       if (teacher) {
         localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-        alert("Welcome, " + teacher.surname + "!");
+        alert("Welcome, " + titel.surname + "!");
         location.href = "class-attendance.html";
       } else {
         alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
