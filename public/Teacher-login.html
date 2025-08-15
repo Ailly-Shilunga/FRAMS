@@ -141,33 +141,29 @@
   </div>
 
   <script>
-    // Show/hide password
-    document.getElementById("togglePassword").addEventListener("change", function() {
-      document.getElementById("password").type = this.checked ? "text" : "password";
-    });
+  
+  // Show/hide password
+  document.getElementById("togglePassword").addEventListener("change", function() {
+    document.getElementById("password").type = this.checked ? "text" : "password";
+  });
 
-    // Login logic with username + password
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-const pwd = document.getElementById("password").value.trim();
-const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-const existing = teachers.find(t => t.username === newUsername);
-if (existing) {
-  alert("Username already taken. Please choose another.");
-  return;
-}
-const teacher = teachers.find(t => t.username === uname && t.password === pwd);
+  // Login logic
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const pwd = document.getElementById("password").value.trim();
+    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
 
+    const teacher = teachers.find(t => t.username === username && t.password === pwd);
 
-      if (teacher) {
-        localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-        alert("Welcome, " + titel.surname + "!");
-        location.href = "class-attendance.html";
-      } else {
-        alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
-      }
-    });
-  </script>
+    if (teacher) {
+      localStorage.setItem("currentTeacher", JSON.stringify(teacher));
+      alert("Welcome, " + teacher.surname + "!");
+      location.href = "class-attendance.html";
+    } else {
+      alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
+    }
+  });
+</script>  
 </body>
 </html>
