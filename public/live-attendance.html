@@ -106,6 +106,93 @@
   </style>
 </head>
 <body>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const videoEl = document.createElement('video');
+  videoEl.setAttribute('autoplay', true);
+  videoEl.setAttribute('muted', true);
+  videoEl.style.display = 'block';
+  videoEl.style.width = '320px';
+  videoEl.style.border = '2px solid orange';
+  videoEl.style.borderRadius = '8px';
+  videoEl.style.margin = '1rem auto';
+  document.body.appendChild(videoEl);
+
+  const rows = Array.from(document.querySelectorAll('.attendance-row'));
+  const classList = rows.map(row => {
+    const name = row.querySelector('.student-name').innerText.trim();
+    const id = row.querySelector('.student-id').innerText.trim();
+    const statusCell = row.querySelector('.status');
+    const lastSeenCell = row.children[3];
+    const [btnP, btnA, btnL] = row.querySelectorAll('.status-options .status-btn');
+    return { name, id, row, statusCell, lastSeenCell, statusBtns: { P: btnP, A: btnA, L: btnL } };
+  });
+
+  async function loadModels() {
+    const MODEL_URL = '/models';
+    await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+    console.log("✅ Models loaded");
+  }
+
+  async function loadLabeledDescriptors() {
+    return Promise.all(classList.map(async student => {
+      try {
+        const img = await faceapi.fetchImage(`assets/faces/${student.id}.jpg`);
+        const detection = await faceapi
+          .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks()
+          .withFaceDescriptor();
+        if (!detection) throw new Error('No face detected');
+        return new faceapi.LabeledFaceDescriptors(student.name, [detection.descriptor]);
+      } catch {
+        console.warn(`⚠️ Skipping ${student.name} (${student.id}) – no valid image.`);
+        return null;
+      }
+    })).then(list => list.filter(Boolean));
+  }
+
+  async function startVideo() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoEl.srcObject = stream;
+    } catch {
+      alert('❌ Camera access denied.');
+    }
+  }
+
+  function markStudentPresent(student) {
+    student.statusCell.textContent = 'Present';
+    student.statusCell.className = 'status-present';
+    Object.values(student.statusBtns).forEach(btn => btn.classList.remove('active'));
+    student.statusBtns.P.classList.add('active');
+    student.lastSeenCell.textContent = new Date().toLocaleString();
+  }
+
+  // Start everything
+  await loadModels();
+  const labeledDescriptors = await loadLabeledDescriptors();
+  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
+  await startVideo();
+
+  setInterval(async () => {
+    const detections = await faceapi
+      .detectAllFaces(videoEl, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks()
+      .withFaceDescriptors();
+
+    detections.forEach(det => {
+      const match = faceMatcher.findBestMatch(det.descriptor);
+      if (match.label !== 'unknown') {
+        const student = classList.find(s => s.name === match.label);
+        if (student) markStudentPresent(student);
+      }
+    });
+  }, 1000);
+});
+</script>
 
   <!-- Top-right buttons -->
   <div class="nav-buttons">
