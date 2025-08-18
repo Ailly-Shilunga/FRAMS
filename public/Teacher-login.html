@@ -141,7 +141,6 @@
   </div>
 
   <script>
-  
   // Show/hide password
   document.getElementById("togglePassword").addEventListener("change", function() {
     document.getElementById("password").type = this.checked ? "text" : "password";
@@ -158,8 +157,8 @@
 
     if (teacher) {
       localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-      alert("Welcome, " + teacher.surname + "!");
-      location.href = "class-attendance.html";
+      alert("Welcome, " + teacher.Surname.Name + "!");
+      location.href = "teacher.html"; // ✅ Redirect to teacher.html
     } else {
       alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
     }

@@ -105,31 +105,35 @@
       <p>Facial Recognition Attendance Management System</p>
     </header>
 
-    <div class="form-container">
+    <div class="form-container" style="margin-top: 2rem;">
       <h2>📝 Sign Up</h2>
       <form id="signupForm">
-      
-        <input type="text" id="titel" placeholder="Title (e.g. Mr/Ms)" maxlength="10" required>
-        <input type="text" id="name" placeholder="Name" required>
+        <select: id="title" required>
+          <option value="">Select Title</option>
+          <option value="mr">Mr.</option>
+          <option value="mrs">Mrs.</option>
+          <option value="ms">Ms.</option>
+          <option value="dr">Dr.</option>
+        </select>
+        <input type="text" id="firstName" placeholder="First Name" required>
         <input type="text" id="surname" placeholder="Surname" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="text" id="class" placeholder="Class (e.g. 9A)" required>
-        <input type="password" id="password" placeholder="Create Password" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
         <div class="toggle-container">
           <label>
-            <input type="checkbox" id="togglePassword"> Show Password
+            <input type="checkbox" id="toggleSignupPassword"> Show Password
           </label>
-        <button type="submit">Create Profile</button>
+        </div>
+        
+        <div class="username-display" id="usernameDisplay" style="margin-bottom: 10px; font-size: 0.9rem;"></div>
+        <button type="submit">Sign Up</button>
       </form>
-    </div>
-  </div>
+    </div> 
 
   <script>
      // Show/hide password
      document.getElementById("togglePassword").addEventListener("change", function() {
       document.getElementById("password").type = this.checked ? "text" : "password";
     });
-    document.getElementById("signupForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const teacher = {
   titel: titel.value,
@@ -145,7 +149,8 @@
       localStorage.setItem("teachers", JSON.stringify(teachers));
       alert("✅ Profile created successfully!");
       location.href = "teacher-login.html";
-    });
+    ;
+    
   </script>
 </body>
 </html>
