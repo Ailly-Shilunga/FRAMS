@@ -115,6 +115,7 @@
           <option value="ms">Ms.</option>
           <option value="dr">Dr.</option>
         </select>
+
         <input type="text" id="firstName" placeholder="First Name" required>
         <input type="text" id="surname" placeholder="Surname" required>
         <input type="password" id="signupPassword" placeholder="Password" required>
@@ -130,27 +131,33 @@
     </div> 
 
   <script>
-     // Show/hide password
-     document.getElementById("togglePassword").addEventListener("change", function() {
-      document.getElementById("password").type = this.checked ? "text" : "password";
-    });
-      e.preventDefault();
-      const teacher = {
-  titel: titel.value,
-  name: name.value,
-  surname: surname.value,
-  email: email.value,
-  class: class{value},
-  password: password.value,
-  username: `${titel.value}${name.value}`.replace(/\s+/g, '') // e.g. "MsAilly"
-};
-      let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-      teachers.push(teacher);
-      localStorage.setItem("teachers", JSON.stringify(teachers));
-      alert("✅ Profile created successfully!");
-      location.href = "teacher-login.html";
-    ;
     
+  document.getElementById("signupForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const firstName = document.getElementById("firstName").value;
+    const surname = document.getElementById("surname").value;
+    const password = document.getElementById("signupPassword").value;
+
+    const teacher = {
+      title,
+      firstName,
+      surname,
+      password,
+      username: `${title} ${firstName}`.replace(/\s+/g, '') // e.g. "Ms Ailly"
+    };
+
+    let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+    teachers.push(teacher);
+    localStorage.setItem("teachers", JSON.stringify(teachers));
+
+    alert("✅ Profile created successfully!");
+    window.location.href = "teacher.html"; // Redirect here
+  });
+</script>
+  
+
   </script>
 </body>
 </html>

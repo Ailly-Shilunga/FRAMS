@@ -268,3 +268,22 @@ const video = document.getElementById('video');
       await startVideo();
       runRecognition();
     })();
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+  const dob = document.getElementById('dob').value;
+  const contact = document.getElementById('parentContact').value;
+
+  const dobPattern = /^\d{4}\/\d{2}\/\d{2}$/;
+  const contactPattern = /^\+264\d{8}$/;
+
+  if (!dobPattern.test(dob)) {
+    e.preventDefault();
+    alert("Date of Birth must be in YYYY/MM/DD format.");
+    return;
+  }
+
+  if (!contactPattern.test(contact)) {
+    e.preventDefault();
+    alert("Parent contact number must start with +264 and be followed by 8 digits.");
+    return;
+  }
+});
