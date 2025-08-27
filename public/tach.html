@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FRAMS - Virtual Register</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    h1 { margin: 0; }
+    button { cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: orange; color: #fff; }
+    .present { background: #d1fae5; }
+    .absent { background: #fee2e2; }
+    .late { background: #fef3c7; }
+    .action-btn { margin: 0 3px; padding: 4px 8px; border: none; border-radius: 4px; }
+    .present-btn { background: #10b981; color: white; }
+    .absent-btn { background: #ef4444; color: white; }
+    .late-btn { background: #f59e0b; color: white; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 id="welcomeText"></h1>
+  <button id="logoutBtn">Logout</button>
+</header>
+
+<section>
+  <h2>Add Student</h2>
+  <form id="addStudentForm">
+    <input type="text" id="studentName" placeholder="Student Name" required>
+    <input type="text" id="studentId" placeholder="Student ID" required>
+    <button type="submit">Add</button>
+  </form>
+</section>
+
+<section>
+  <h2>Class Register</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="registerBody"></tbody>
+  </table>
+</section>
+
+<script>
+  // === Session check ===
+  const teacher = JSON.parse(localStorage.getItem("currentTeacher"));
+  if (!teacher) {
+    alert("No teacher logged in. Please log in first.");
+    window.location.href = "Login-signup.html";
+  }
+
+  // Display welcome message
+  document.getElementById("welcomeText").textContent = `Welcome, ${teacher.title}.${teacher.firstName}`;
+
+  // Load students from storage
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  let attendance = JSON.parse(localStorage.getItem("attendance")) || {};
+
+  const registerBody = document.getElementById("registerBody");
+
+  // Render the register table
+  function renderRegister() {
+    registerBody.innerHTML = "";
+    students.forEach(student => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${student.id}</td>
+        <td>${student.name}</td>
+        <td class="${attendance[student.id] ? attendance[student.id].toLowerCase() : ""}">
+          ${attendance[student.id] || "Not Marked"}
+        </td>
+        <td>
+          <button class="action-btn present-btn" onclick="markAttendance('${student.id}', 'Present')">P</button>
+          <button class="action-btn absent-btn" onclick="markAttendance('${student.id}', 'Absent')">A</button>
+          <button class="action-btn late-btn" onclick="markAttendance('${student.id}', 'Late')">L</button>
+        </td>
+      `;
+      registerBody.appendChild(tr);
+    });
+  }
+
+  // Add new student
+  document.getElementById("addStudentForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("studentName").value.trim();
+    const id = document.getElementById("studentId").value.trim();
+    if (!name || !id) return;
+
+    students.push({ id, name });
+    localStorage.setItem("students", JSON.stringify(students));
+    document.getElementById("studentName").value = "";
+    document.getElementById("studentId").value = "";
+    renderRegister();
+  });
+
+  // Mark attendance
+  window.markAttendance = function(id, status) {
+    attendance[id] = status;
+    localStorage.setItem("attendance", JSON.stringify(attendance));
+    renderRegister();
+  };
+
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", function() {
+    localStorage.removeItem("currentTeacher");
+    window.location.href = "Login-signup.html";
+  });
+
+  renderRegister();
+</script>
+
+</body>
+</html>

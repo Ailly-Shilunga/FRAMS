@@ -13,7 +13,6 @@
       display: flex;
       gap: 10px;
     }
-
     .nav-button {
       background-color: orange;
       color: #333;
@@ -24,12 +23,10 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
     .nav-button:hover {
       background-color: orange;
       transform: scale(1.05);
     }
-
     /* Centered form container */
     .form-wrapper {
       display: flex;
@@ -38,7 +35,6 @@
       height: 100vh;
       flex-direction: column;
     }
-
     .form-container {
       width: 360px;
       padding: 2rem;
@@ -47,12 +43,8 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       text-align: center;
     }
-
-    .form-container h2 {
-      margin-bottom: 1rem;
-    }
-
-    .form-container input {
+    .form-container h2 { margin-bottom: 1rem; }
+    .form-container input, .form-container select {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
@@ -60,7 +52,6 @@
       border: 1px solid #ccc;
       box-sizing: border-box;
     }
-
     .form-container button {
       width: 100%;
       padding: 12px;
@@ -72,16 +63,13 @@
       cursor: pointer;
       font-size: 1rem;
     }
-
     .form-container button:hover {
       background-color: #005fa3;
     }
-
     .center-header {
       text-align: center;
       margin-bottom: 2rem;
     }
-
     .logo {
       display: block;
       margin: 0 auto 1rem auto;
@@ -105,59 +93,79 @@
       <p>Facial Recognition Attendance Management System</p>
     </header>
 
-    <div class="form-container" style="margin-top: 2rem;">
+    <div class="form-container">
       <h2>📝 Sign Up</h2>
       <form id="signupForm">
-        <select: id="title" required>
+
+        <label for="title">Title</label>
+        <select id="title" required>
           <option value="">Select Title</option>
-          <option value="mr">Mr.</option>
-          <option value="mrs">Mrs.</option>
-          <option value="ms">Ms.</option>
-          <option value="dr">Dr.</option>
+          <option value="Mr">Mr.</option>
+          <option value="Mrs">Mrs.</option>
+          <option value="Ms">Ms.</option>
+          <option value="Dr">Dr.</option>
         </select>
 
         <input type="text" id="firstName" placeholder="First Name" required>
         <input type="text" id="surname" placeholder="Surname" required>
+
         <input type="password" id="signupPassword" placeholder="Password" required>
         <div class="toggle-container">
           <label>
             <input type="checkbox" id="toggleSignupPassword"> Show Password
           </label>
         </div>
-        
+
         <div class="username-display" id="usernameDisplay" style="margin-bottom: 10px; font-size: 0.9rem;"></div>
         <button type="submit">Sign Up</button>
       </form>
-    </div> 
+    </div>
+  </div>
 
-  <script>
-    
+<script>
+  // Show/hide password toggle
+  document.getElementById("toggleSignupPassword").addEventListener("change", function() {
+    const passwordInput = document.getElementById("signupPassword");
+    passwordInput.type = this.checked ? "text" : "password";
+  });
+
+  // Live username preview
+  document.getElementById("firstName").addEventListener("input", updateUsername);
+  document.getElementById("title").addEventListener("change", updateUsername);
+
+  function updateUsername() {
+    const title = document.getElementById("title").value;
+    const firstName = document.getElementById("firstName").value.trim();
+    if (title && firstName) {
+      const username = `${title}.${firstName}`.replace(/\s+/g, '');
+      document.getElementById("usernameDisplay").textContent = `Your username will be: ${username}`;
+    } else {
+      document.getElementById("usernameDisplay").textContent = '';
+    }
+  }
+
+  // Handle signup submission
   document.getElementById("signupForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
     const title = document.getElementById("title").value;
-    const firstName = document.getElementById("firstName").value;
-    const surname = document.getElementById("surname").value;
+    const firstName = document.getElementById("firstName").value.trim();
+    const surname = document.getElementById("surname").value.trim();
     const password = document.getElementById("signupPassword").value;
 
-    const teacher = {
-      title,
-      firstName,
-      surname,
-      password,
-      username: `${title} ${firstName}`.replace(/\s+/g, '') // e.g. "Ms Ailly"
-    };
+    const username = `${title}.${firstName}`.replace(/\s+/g, '');
+
+    const teacher = { title, firstName, surname, password, username };
 
     let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
     teachers.push(teacher);
     localStorage.setItem("teachers", JSON.stringify(teachers));
+    localStorage.setItem("currentTeacher", JSON.stringify(teacher)); // Save session
 
-    alert("✅ Profile created successfully!");
-    window.location.href = "teacher.html"; // Redirect here
+    alert(`✅ Profile created successfully!\nYour username is: ${username}`);
+    window.location.href = "teacher.html"; // Redirect
   });
 </script>
-  
 
-  </script>
 </body>
 </html>

@@ -428,61 +428,96 @@
         flex-direction: column;
       }
     }
+    .home-button,
+.back-button {
+  position: absolute;
+  right: 20px;
+  background-color: orange;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.home-button {
+  top: 20px;
+}
+
+.back-button {
+  top: 20px; /* Just next to the Home button */
+}
+
+.home-button:hover,
+.back-button:hover {
+  background-color: orange;
+  transform: scale(1.05);
+}
+
   </style>
 </head>
 <body>
+  <!-- Top-right buttons -->
+<div class="nav-buttons">
+  <a href="index.html" class="nav-button">🏠 Home</a>
+  <!-- Option A: Go back to a specific page -->
+  <a href="Login-signup.html" class="nav-button">🔙 Back</a>
+  <!-- Option B (alternative): Go back in history -->
+  <!-- <a href="javascript:history.back()" class="nav-button">🔙 Back</a> -->
+</div>
   <!-- Header with logo -->
   <header class="center-header">
-    <img src="https://via.placeholder.com/100x50/FFA500/FFFFFF?text=FRAMS" alt="FRAMS Logo" class="logo">
+    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
     <h1>Teacher Virtual Register</h1>
     <p>Facial Recognition Attendance Management System</p>
   </header>
 
   <main>
+<body>
+
+
+  <main>
     <!-- Teacher information -->
     <div class="teacher-info">
-      <div class="teacher-avatar">AM</div>
+      <div class="teacher-avatar" id="teacherInitials"></div>
       <div class="teacher-details">
-        <h2>Ms. Ailly Sh. (Computer Science Department)</h2>
-        <p>Logged in: Today at 8:15 AM | Last Access: Oct 14, 2023</p>
+        <h2 id="teacherName"></h2>
+        <p id="loginDetails"></p>
       </div>
-      <button class="logout-btn">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
+      <button class="logout-btn">Logout</button>
     </div>
 
     <!-- Filters -->
     <div class="filters">
       <div class="filter-group">
-        <label for="class-select"><i class="fas fa-book"></i> Class</label>
+        <label for="class-select">Class</label>
         <select id="class-select">
-          <option value="cs101">CS 101 - Introduction to Programming</option>
-          <option value="cs201" selected>CS 201 - Data Structures</option>
-          <option value="cs301">CS 301 - Algorithms</option>
-          <option value="ai401">AI 401 - Machine Learning</option>
+          <option value="default" selected>Select Class</option>
         </select>
       </div>
-      
+
       <div class="filter-group">
-        <label for="date-select"><i class="fas fa-calendar"></i> Date</label>
-        <input type="date" id="date-select" value="2023-10-15">
+        <label for="date-select">Date</label>
+        <input type="date" id="date-select">
       </div>
-      
+
       <div class="filter-group">
-        <label for="period-select"><i class="fas fa-clock"></i> Period</label>
+        <label for="period-select">Period</label>
         <select id="period-select">
-          <option value="1">Period 1 (8:00-9:30)</option>
-          <option value="2" selected>Period 2 (10:00-11:30)</option>
-          <option value="3">Period 3 (12:30-2:00)</option>
-          <option value="4">Period 4 (2:30-4:00)</option>
+          <option value="1">Period 1</option>
+          <option value="2">Period 2</option>
+          <option value="3">Period 3</option>
+          <option value="4">Period 4</option>
         </select>
       </div>
-      
+
       <div class="filter-group">
-        <label for="section-select"><i class="fas fa-users"></i> Section</label>
+        <label for="section-select">Section</label>
         <select id="section-select">
           <option value="A">Section A</option>
-          <option value="B" selected>Section B</option>
+          <option value="B">Section B</option>
           <option value="C">Section C</option>
         </select>
       </div>
@@ -490,279 +525,132 @@
 
     <!-- Action Buttons -->
     <div class="action-buttons">
-      <button class="action-btn">
-        <i class="fas fa-sync-alt"></i> Refresh Attendance
-      </button>
-      <button class="action-btn">
-        <i class="fas fa-save"></i> Save Changes
-      </button>
-      <button class="action-btn secondary">
-        <i class="fas fa-file-pdf"></i> Export to PDF
-      </button>
-      <button class="action-btn secondary">
-        <i class="fas fa-camera"></i> Start Live Attendance
-      </button>
+      <button class="action-btn" id="refreshBtn">Refresh Attendance</button>
+      <button class="action-btn" id="saveBtn">Save Changes</button>
+      <button class="action-btn secondary" id="exportBtn">Export to PDF</button>
+      <button class="action-btn secondary" id="liveBtn">Start Live Attendance</button>
     </div>
 
     <!-- Summary Cards -->
     <div class="summary-cards">
-      <div class="summary-card">
-        <div class="card-header">
-          <div class="card-icon">
-            <i class="fas fa-user-check"></i>
-          </div>
-          <div class="card-content">
-            <h3>24</h3>
-            <p>Students Present</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="summary-card">
-        <div class="card-header">
-          <div class="card-icon absent">
-            <i class="fas fa-user-slash"></i>
-          </div>
-          <div class="card-content">
-            <h3>3</h3>
-            <p>Students Absent</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="summary-card">
-        <div class="card-header">
-          <div class="card-icon late">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="card-content">
-            <h3>2</h3>
-            <p>Students Late</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="summary-card">
-        <div class="card-header">
-          <div class="card-icon total">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="card-content">
-            <h3>29</h3>
-            <p>Total Students</p>
-          </div>
-        </div>
-      </div>
+      <div class="summary-card"><h3 id="presentCount">0</h3><p>Students Present</p></div>
+      <div class="summary-card"><h3 id="absentCount">0</h3><p>Students Absent</p></div>
+      <div class="summary-card"><h3 id="lateCount">0</h3><p>Students Late</p></div>
+      <div class="summary-card"><h3 id="totalCount">0</h3><p>Total Students</p></div>
     </div>
 
     <!-- Attendance Grid -->
     <div class="attendance-container">
       <div class="attendance-header">
-        <div>Student</div>
-        <div>ID</div>
-        <div>Status</div>
-        <div>Last Seen</div>
-        <div>Mark</div>
+        <div>Student</div><div>ID</div><div>Status</div><div>Last Seen</div><div>Mark</div>
       </div>
-      
-      <div class="attendance-list">
-        <!-- Student 1 -->
-        <div class="attendance-row">
-          <div class="student-info">
-            <div class="student-avatar">JD</div>
-            <div>
-              <div class="student-name">John Doe</div>
-              <div class="student-id">SID-202301</div>
-            </div>
-          </div>
-          <div>SID-202301</div>
-          <div>
-            <span class="status status-present">Present</span>
-          </div>
-          <div>Today, 10:05 AM</div>
-          <div class="status-options">
-            <button class="status-btn active">P</button>
-            <button class="status-btn">A</button>
-            <button class="status-btn">L</button>
-          </div>
-        </div>
-        
-        <!-- Student 2 -->
-        <div class="attendance-row">
-          <div class="student-info">
-            <div class="student-avatar">AS</div>
-            <div>
-              <div class="student-name">Alex Smith</div>
-              <div class="student-id">SID-202302</div>
-            </div>
-          </div>
-          <div>SID-202302</div>
-          <div>
-            <span class="status status-absent">Absent</span>
-          </div>
-          <div>Oct 12, 2:30 PM</div>
-          <div class="status-options">
-            <button class="status-btn">P</button>
-            <button class="status-btn active">A</button>
-            <button class="status-btn">L</button>
-          </div>
-        </div>
-        
-        <!-- Student 3 -->
-        <div class="attendance-row">
-          <div class="student-info">
-            <div class="student-avatar">MJ</div>
-            <div>
-              <div class="student-name">Maria Johnson</div>
-              <div class="student-id">SID-202303</div>
-            </div>
-          </div>
-          <div>SID-202303</div>
-          <div>
-            <span class="status status-late">Late</span>
-          </div>
-          <div>Today, 10:25 AM</div>
-          <div class="status-options">
-            <button class="status-btn">P</button>
-            <button class="status-btn">A</button>
-            <button class="status-btn active">L</button>
-          </div>
-        </div>
-        
-        <!-- Student 4 -->
-        <div class="attendance-row">
-          <div class="student-info">
-            <div class="student-avatar">RW</div>
-            <div>
-              <div class="student-name">Robert Williams</div>
-              <div class="student-id">SID-202304</div>
-            </div>
-          </div>
-          <div>SID-202304</div>
-          <div>
-            <span class="status status-present">Present</span>
-          </div>
-          <div>Today, 10:02 AM</div>
-          <div class="status-options">
-            <button class="status-btn active">P</button>
-            <button class="status-btn">A</button>
-            <button class="status-btn">L</button>
-          </div>
-        </div>
-        
-        <!-- Student 5 -->
-        <div class="attendance-row">
-          <div class="student-info">
-            <div class="student-avatar">EB</div>
-            <div>
-              <div class="student-name">Emily Brown</div>
-              <div class="student-id">SID-202305</div>
-            </div>
-          </div>
-          <div>SID-202305</div>
-          <div>
-            <span class="status status-present">Present</span>
-          </div>
-          <div>Today, 10:01 AM</div>
-          <div class="status-options">
-            <button class="status-btn active">P</button>
-            <button class="status-btn">A</button>
-            <button class="status-btn">L</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Explanation section -->
-    <div class="explanation">
-      <h2><i class="fas fa-info-circle"></i> How This Works</h2>
-      <div class="explanation-content">
-        <div class="explanation-box">
-          <h3>Teacher Login</h3>
-          <p>Teachers log in through the login page with their credentials. Once authenticated, the system retrieves their profile information and assigned classes from the database.</p>
-        </div>
-        
-        <div class="explanation-box">
-          <h3>Student Data</h3>
-          <p>Student information is stored in your database when they're added via the "Add Student" page. Each student gets a unique ID (like SID-202301) that's generated automatically.</p>
-        </div>
-        
-        <div class="explanation-box">
-          <h3>Attendance Tracking</h3>
-          <p>The system uses facial recognition to automatically mark attendance when students enter the classroom. Teachers can manually override statuses as needed in this register.</p>
-        </div>
-        
-        <div class="explanation-box">
-          <h3>Data Flow</h3>
-          <p>1. Teacher logs in → 2. System fetches teacher's classes → 3. Teacher selects class/date → 4. System loads student list with attendance data → 5. Teacher can modify and save attendance records.</p>
-        </div>
-      </div>
+      <div class="attendance-list" id="attendanceList"></div>
     </div>
   </main>
-  
-  <script>
-    // Initialize the page functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set today's date as default
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('date-select').value = today;
-      
-      // Status button functionality
-      const statusButtons = document.querySelectorAll('.status-btn');
-      statusButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Remove active class from siblings
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Load teacher from localStorage
+  const teacher = JSON.parse(localStorage.getItem("currentTeacher"));
+  if (!teacher) {
+    alert("Please log in first.");
+    window.location.href = "Login-signup.html";
+    return;
+  }
+
+  // Fill teacher info
+  document.getElementById("teacherName").textContent =
+    `${teacher.title}.${teacher.firstName} ${teacher.surname}`;
+  document.getElementById("teacherInitials").textContent =
+    (teacher.firstName[0] + teacher.surname[0]).toUpperCase();
+  document.getElementById("loginDetails").textContent =
+    `Logged in: ${new Date().toLocaleString()}`;
+
+  // Set today's date in date picker
+  document.getElementById('date-select').value = new Date().toISOString().split('T')[0];
+
+  // Load stored students and attendance
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  let attendance = JSON.parse(localStorage.getItem("attendance")) || {};
+
+  const listContainer = document.getElementById("attendanceList");
+
+  function renderList() {
+    listContainer.innerHTML = "";
+    let present = 0, absent = 0, late = 0;
+
+    students.forEach(stu => {
+      const statusData = attendance[stu.id] || { status: "Not Marked", time: "-" };
+      if (statusData.status === "Present") present++;
+      if (statusData.status === "Absent") absent++;
+      if (statusData.status === "Late") late++;
+
+      const row = document.createElement("div");
+      row.classList.add("attendance-row");
+      row.innerHTML = `
+        <div class="student-info">
+          <div class="student-avatar">${stu.name[0]}${stu.surname ? stu.surname[0] : ''}</div>
+          <div>
+            <div class="student-name">${stu.name}</div>
+            <div class="student-id">${stu.id}</div>
+          </div>
+        </div>
+        <div>${stu.id}</div>
+        <div><span class="status ${statusData.status !== 'Not Marked' ? 'status-' + statusData.status.toLowerCase() : ''}">${statusData.status}</span></div>
+        <div>${statusData.time}</div>
+        <div class="status-options">
+          <button class="status-btn ${statusData.status === 'Present' ? 'active' : ''}">P</button>
+          <button class="status-btn ${statusData.status === 'Absent' ? 'active' : ''}">A</button>
+          <button class="status-btn ${statusData.status === 'Late' ? 'active' : ''}">L</button>
+        </div>
+      `;
+
+      // Status button events
+      row.querySelectorAll('.status-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
           const siblings = Array.from(this.parentElement.children);
           siblings.forEach(sib => sib.classList.remove('active'));
-          
-          // Add active class to clicked button
           this.classList.add('active');
-          
-          // Update the status display
-          const statusDisplay = this.closest('.attendance-row').querySelector('.status');
+
           const statusText = this.textContent.trim();
-          
-          // Remove all status classes
-          statusDisplay.classList.remove('status-present', 'status-absent', 'status-late');
-          
-          // Add appropriate class
-          if (statusText === 'P') {
-            statusDisplay.textContent = 'Present';
-            statusDisplay.classList.add('status-present');
-          } else if (statusText === 'A') {
-            statusDisplay.textContent = 'Absent';
-            statusDisplay.classList.add('status-absent');
-          } else if (statusText === 'L') {
-            statusDisplay.textContent = 'Late';
-            statusDisplay.classList.add('status-late');
-          }
+          let newStatus = "Not Marked";
+          if (statusText === 'P') newStatus = "Present";
+          if (statusText === 'A') newStatus = "Absent";
+          if (statusText === 'L') newStatus = "Late";
+
+          attendance[stu.id] = { status: newStatus, time: new Date().toLocaleString() };
+          localStorage.setItem("attendance", JSON.stringify(attendance));
+          renderList();
         });
       });
-      
-      // Refresh button functionality
-      document.querySelector('.action-btn:nth-child(1)').addEventListener('click', function() {
-        alert('Attendance data refreshed successfully!');
-        // In a real app: fetch updated data from server
-      });
-      
-      // Save button functionality
-      document.querySelector('.action-btn:nth-child(2)').addEventListener('click', function() {
-        alert('Attendance records saved successfully!');
-        // In a real app: send updated attendance to server
-      });
-      
-      // Live Attendance button
-      document.querySelector('.action-btn:nth-child(4)').addEventListener('click', function() {
-        alert('Redirecting to Live Attendance page...');
-        // In a real app: window.location.href = 'live-attendance.html';
-      });
-      
-      // Logout button
-      document.querySelector('.logout-btn').addEventListener('click', function() {
-        alert('Logging out...');
-        // In a real app: window.location.href = 'login.html';
-      });
+
+      listContainer.appendChild(row);
     });
-  </script>
+
+    // Update summary cards
+    document.getElementById('presentCount').textContent = present;
+    document.getElementById('absentCount').textContent = absent;
+    document.getElementById('lateCount').textContent = late;
+    document.getElementById('totalCount').textContent = students.length;
+  }
+
+  // Buttons
+  document.getElementById("refreshBtn").addEventListener("click", renderList);
+  document.getElementById("saveBtn").addEventListener("click", function () {
+    localStorage.setItem("attendance", JSON.stringify(attendance));
+    alert("Attendance records saved successfully!");
+  });
+  document.getElementById("liveBtn").addEventListener("click", function () {
+    alert("Redirecting to Live Attendance page...");
+  });
+  document.querySelector(".logout-btn").addEventListener("click", function () {
+    localStorage.removeItem("currentTeacher");
+    window.location.href = "Login-signup.html";
+  });
+
+  renderList();
+});
+</script>
+
 </body>
-</html>
+</html>   
