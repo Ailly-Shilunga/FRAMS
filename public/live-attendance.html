@@ -6,198 +6,45 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif; background-color: #f4f6f8; margin: 0; padding: 0;
     }
-
     .nav-buttons {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
+      position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;
     }
-
     .nav-button {
-      background-color: orange;
-      color: #333;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
+      background-color: orange; color: #333; padding: 10px 20px; border-radius: 25px;
+      text-decoration: none; font-weight: bold;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
-    .nav-button:hover {
-      background-color: dodgerblue;
-      transform: scale(1.05);
-    }
-
-    .header {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-    }
-
-    .header h1 {
-      margin-bottom: 0.5rem;
-    }
-
-    .datetime {
-      font-size: 1rem;
-      color: #555;
-    }
-
+    .nav-button:hover { background-color: dodgerblue; transform: scale(1.05); }
+    .header { text-align: center; padding: 2rem 1rem 1rem; }
+    .header h1 { margin-bottom: 0.5rem; }
+    .datetime { font-size: 1rem; color: #555; }
     .main-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
+      display: flex; flex-direction: column; align-items: center; padding: 2rem;
     }
-
     video {
-      border: 2px solid #007acc;
-      border-radius: 8px;
-      max-width: 480px;
-      width: 100%;
+      border: 2px solid #007acc; border-radius: 8px; max-width: 480px; width: 100%;
       margin-bottom: 1rem;
     }
-
     .attendance-list {
-      margin-top: 1rem;
-      width: 100%;
-      max-width: 480px;
-      background: #fff;
-      border-radius: 8px;
-      padding: 1rem;
+      margin-top: 1rem; width: 100%; max-width: 480px; background: #fff;
+      border-radius: 8px; padding: 1rem;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-
-    .attendance-list h3 {
-      margin-bottom: 0.5rem;
-    }
-
-    .attendance-list ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .attendance-list li {
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .start-button {
-      background-color: orange;
-      color: #fff;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-
-    .start-button:hover {
-      background-color: #005fa3;
-    }
+    .attendance-list h3 { margin-bottom: 0.5rem; }
+    .attendance-list ul { list-style: none; padding: 0; margin: 0; }
+    .attendance-list li { padding: 6px 0; border-bottom: 1px solid #eee; }
   </style>
 </head>
 <body>
   <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-  const videoEl = document.createElement('video');
-  videoEl.setAttribute('autoplay', true);
-  videoEl.setAttribute('muted', true);
-  videoEl.style.display = 'block';
-  videoEl.style.width = '320px';
-  videoEl.style.border = '2px solid orange';
-  videoEl.style.borderRadius = '8px';
-  videoEl.style.margin = '1rem auto';
-  document.body.appendChild(videoEl);
 
-  const rows = Array.from(document.querySelectorAll('.attendance-row'));
-  const classList = rows.map(row => {
-    const name = row.querySelector('.student-name').innerText.trim();
-    const id = row.querySelector('.student-id').innerText.trim();
-    const statusCell = row.querySelector('.status');
-    const lastSeenCell = row.children[3];
-    const [btnP, btnA, btnL] = row.querySelectorAll('.status-options .status-btn');
-    return { name, id, row, statusCell, lastSeenCell, statusBtns: { P: btnP, A: btnA, L: btnL } };
-  });
-
-  async function loadModels() {
-    const MODEL_URL = '/models';
-    await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-    await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-    await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-    console.log("✅ Models loaded");
-  }
-
-  async function loadLabeledDescriptors() {
-    return Promise.all(classList.map(async student => {
-      try {
-        const img = await faceapi.fetchImage(`assets/faces/${student.id}.jpg`);
-        const detection = await faceapi
-          .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks()
-          .withFaceDescriptor();
-        if (!detection) throw new Error('No face detected');
-        return new faceapi.LabeledFaceDescriptors(student.name, [detection.descriptor]);
-      } catch {
-        console.warn(`⚠️ Skipping ${student.name} (${student.id}) – no valid image.`);
-        return null;
-      }
-    })).then(list => list.filter(Boolean));
-  }
-
-  async function startVideo() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoEl.srcObject = stream;
-    } catch {
-      alert('❌ Camera access denied.');
-    }
-  }
-
-  function markStudentPresent(student) {
-    student.statusCell.textContent = 'Present';
-    student.statusCell.className = 'status-present';
-    Object.values(student.statusBtns).forEach(btn => btn.classList.remove('active'));
-    student.statusBtns.P.classList.add('active');
-    student.lastSeenCell.textContent = new Date().toLocaleString();
-  }
-
-  // Start everything
-  await loadModels();
-  const labeledDescriptors = await loadLabeledDescriptors();
-  const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
-  await startVideo();
-
-  setInterval(async () => {
-    const detections = await faceapi
-      .detectAllFaces(videoEl, new faceapi.TinyFaceDetectorOptions())
-      .withFaceLandmarks()
-      .withFaceDescriptors();
-
-    detections.forEach(det => {
-      const match = faceMatcher.findBestMatch(det.descriptor);
-      if (match.label !== 'unknown') {
-        const student = classList.find(s => s.name === match.label);
-        if (student) markStudentPresent(student);
-      }
-    });
-  }, 1000);
-});
-</script>
-
-  <!-- Top-right buttons -->
+  <!-- Navigation -->
   <div class="nav-buttons">
     <a href="index.html" class="nav-button">🏠 Home</a>
-    <a href="Teacher-dashboard.html" class="nav-button">🔙 Back</a>
+    <a href="teacher.html" class="nav-button">🔙 Back</a>
   </div>
 
   <!-- Header -->
@@ -208,49 +55,105 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   <!-- Main Content -->
   <div class="main-content">
-    <video id="camera" autoplay></video>
-    <button class="start-button" onclick="markAttendance()">Mark Attendance</button>
+    <video id="camera" autoplay muted></video>
 
     <div class="attendance-list">
       <h3>✅ Present Students</h3>
-      <ul id="attendanceList"></ul>
+      <ul id="presentList"></ul>
     </div>
   </div>
 
   <script>
-    // Show current date & time
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Live date/time
     function updateDateTime() {
-      const now = new Date();
-      document.getElementById("datetime").textContent = now.toLocaleString();
+      document.getElementById("datetime").textContent = new Date().toLocaleString();
     }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
+    setInterval(updateDateTime, 1000); updateDateTime();
+
+    // Load teacher and class students
+    const teacher = JSON.parse(localStorage.getItem("currentTeacher"));
+    if (!teacher) {
+      alert("Please log in first.");
+      return location.href = "Login-signup.html";
+    }
+    let allStudents = JSON.parse(localStorage.getItem("students")) || [];
+    let students = allStudents.filter(s => s.classId === teacher.classId);
+
+    // Elements
+    const videoEl = document.getElementById('camera');
+    const presentList = document.getElementById('presentList');
+    const presentSet = new Set();
+
+    // Load models
+    const MODEL_URL = '/models';
+    await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+    console.log("✅ Models loaded");
+
+    // Load labeled face descriptors
+    async function loadLabeledDescriptors() {
+      return Promise.all(students.map(async stu => {
+        try {
+          const img = await faceapi.fetchImage(`assets/faces/${stu.id}.jpg`);
+          const detection = await faceapi
+            .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+            .withFaceLandmarks()
+            .withFaceDescriptor();
+          if (!detection) throw new Error();
+          return new faceapi.LabeledFaceDescriptors(stu.name, [detection.descriptor]);
+        } catch {
+          console.warn(`⚠️ Missing/invalid image for ${stu.name} (${stu.id})`);
+          return null;
+        }
+      })).then(list => list.filter(Boolean));
+    }
+
+    const labeledDescriptors = await loadLabeledDescriptors();
+    const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
 
     // Start camera
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        document.getElementById("camera").srcObject = stream;
-      })
-      .catch(err => {
-        alert("Camera access denied or unavailable.");
-      });
-
-    // Dummy attendance logic
-    function markAttendance() {
-      const students = ["Anna", "Brian", "Chloe", "David", "Ella"];
-      const present = students.sort(() => 0.5 - Math.random()).slice(0, 3); // Random 3
-      const list = document.getElementById("attendanceList");
-      list.innerHTML = "";
-      present.forEach(name => {
-        const li = document.createElement("li");
-        li.textContent = name;
-        list.appendChild(li);
-      });
-
-      // Save to localStorage
-      const today = new Date().toLocaleDateString();
-      localStorage.setItem("attendance_" + today, JSON.stringify(present));
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoEl.srcObject = stream;
+    } catch {
+      alert("❌ Camera access denied."); return;
     }
+
+    // Mark student present
+    function markPresent(name) {
+      if (!presentSet.has(name)) {
+        presentSet.add(name);
+        const li = document.createElement('li');
+        li.textContent = name;
+        presentList.appendChild(li);
+
+        const today = new Date().toLocaleDateString();
+        const key = `attendance_${teacher.classId}_${today}`;
+        const saved = JSON.parse(localStorage.getItem(key)) || [];
+        if (!saved.includes(name)) {
+          saved.push(name);
+          localStorage.setItem(key, JSON.stringify(saved));
+        }
+      }
+    }
+
+    // Detection loop
+    setInterval(async () => {
+      const detections = await faceapi
+        .detectAllFaces(videoEl, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceDescriptors();
+
+      detections.forEach(det => {
+        const match = faceMatcher.findBestMatch(det.descriptor);
+        if (match.label !== 'unknown') {
+          markPresent(match.label);
+        }
+      });
+    }, 1000);
+  });
   </script>
 </body>
 </html>

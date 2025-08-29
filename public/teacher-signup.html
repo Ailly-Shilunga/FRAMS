@@ -2,9 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FRAMS Dashboard</title>
+  <title>FRAMS Dashboard – Sign Up</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Top-right nav buttons */
+  .nav-buttons {
+    position: absolute;top: 20px;right: 20px;display: flex;gap: 10px;
+  }
+  .nav-button{
+   background-color: orange;color: #333;padding: 10px 20px;
+   border-radius: 25px;
+   text-decoration: none;
+   font-weight: bold;
+   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+   transition: background-color 0.3s ease,transform 0.2s ease;
+  }
+   
+   .nav-button:hover
+    {background-color: orange;
+    transform: scale(1.05);
+  }
+
+    /* Centered form container */
+    
+    .form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+    
+    .form-container {
+      width: 360px;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+     text-align: center;}
+     
+     .form-container h2{ 
+      margin-bottom: 1rem;
+     
+     }
+     .form-container input, 
+     .form-container select {
+      width: 100%;
+     padding: 10px;
+     margin: 8px 0;
+     border-radius: 5px;
+     border: 1px solid #ccc;
+     box-sizing: border-box;
+    }
+     
+     .form-container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      background-color: orange;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      }
+
+      .form-container button:hover {
+        background-color: #005fa3;
+        }
+
+        .center-header 
+        {text-align: center;
+        margin-bottom: 2rem;
+      }
+        .logo {
+          display: block;
+        margin: 0 auto 1rem auto;
+        max-height: 120px;
+      }
     /* Top-right nav buttons */
     .nav-buttons {
       position: absolute;
@@ -16,41 +91,52 @@
     .nav-button {
       background-color: orange;
       color: #333;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 6px 14px;
+      border-radius: 20px;
       text-decoration: none;
+      font-size: 0.85rem;
       font-weight: bold;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+      transition: background-color 0.2s, transform 0.15s;
     }
     .nav-button:hover {
-      background-color: orange;
+      background-color: darkorange;
       transform: scale(1.05);
     }
-    /* Centered form container */
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
+
+ /* Centered form wrapper */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 1rem; /* added breathing space so it doesn't stick to edges */
+}
+
+/* Form container - more horizontal */
+.form-container {
+  width: 600px;                /* wider but not full page */
+  max-width: 90%;              /* ensures it stays good on smaller screens */
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+    .form-container h2 {
+      margin-bottom: 1rem;
     }
-    .form-container {
-      width: 360px;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .form-container h2 { margin-bottom: 1rem; }
-    .form-container input, .form-container select {
+    .form-container input,
+    .form-container select {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
-      border-radius: 5px;
       border: 1px solid #ccc;
+      border-radius: 5px;
       box-sizing: border-box;
+      font-size: 1rem;
     }
     .form-container button {
       width: 100%;
@@ -66,37 +152,45 @@
     .form-container button:hover {
       background-color: #005fa3;
     }
+    .toggle-container {
+      text-align: left;
+      font-size: 0.9rem;
+      margin: -4px 0 12px;
+    }
+    .username-display {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      height: 1.2em;
+    }
     .center-header {
-      text-align: center;
       margin-bottom: 2rem;
+      text-align: center;
     }
     .logo {
       display: block;
-      margin: 0 auto 1rem auto;
+      margin: 0 auto 1rem;
       max-height: 120px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top-right buttons -->
+  <!-- nav pills -->
   <div class="nav-buttons">
     <a href="index.html" class="nav-button">🏠 Home</a>
     <a href="Login-signup.html" class="nav-button">🔙 Back</a>
   </div>
 
-  <!-- Centered form and header -->
   <div class="form-wrapper">
-    <header class="center-header">
-      <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
-      <h1>Welcome to FRAMS</h1>
-      <p>Facial Recognition Attendance Management System</p>
-    </header>
-
     <div class="form-container">
+      <header class="center-header">
+        <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+        <h1>Welcome to FRAMS</h1>
+        <p>Facial Recognition Attendance Management System</p>
+      </header>
+
       <h2>📝 Sign Up</h2>
       <form id="signupForm">
-
         <label for="title">Title</label>
         <select id="title" required>
           <option value="">Select Title</option>
@@ -107,65 +201,109 @@
         </select>
 
         <input type="text" id="firstName" placeholder="First Name" required>
-        <input type="text" id="surname" placeholder="Surname" required>
+        <input type="text" id="surname"   placeholder="Surname"    required>
 
-        <input type="password" id="signupPassword" placeholder="Password" required>
-        <div class="toggle-container">
-          <label>
-            <input type="checkbox" id="toggleSignupPassword"> Show Password
-          </label>
+        <!-- Register Class as text input -->
+        <input
+          type="text"
+          id="classId"
+          placeholder="Register Class (e.g. 11A)"
+          required
+        >
+
+        <!-- Password Input -->
+<input
+type="password"
+id="signupPassword"
+name="password"
+placeholder="Enter password"
+minlength="8"
+maxlength="20"
+required
+>
+
+<!-- Validation Message -->
+<small id="passwordHelp" style="color: rgb(247, 6, 6); display: block; margin-top: 5px;">
+Password must be between 8–20 characters.
+</small>
+
+<!-- Show Password Toggle -->
+<label>
+<input type="checkbox" id="toggleSignupPassword"> Show Password
+</label>
+
         </div>
 
-        <div class="username-display" id="usernameDisplay" style="margin-bottom: 10px; font-size: 0.9rem;"></div>
+        <div class="username-display" id="usernameDisplay"></div>
         <button type="submit">Sign Up</button>
       </form>
     </div>
   </div>
 
-<script>
-  // Show/hide password toggle
-  document.getElementById("toggleSignupPassword").addEventListener("change", function() {
-    const passwordInput = document.getElementById("signupPassword");
-    passwordInput.type = this.checked ? "text" : "password";
+  <script>
+    // Password toggle
+  
+  const passwordInput = document.getElementById("signupPassword");
+  const passwordHelp = document.getElementById("passwordHelp");
+  const toggle = document.getElementById("toggleSignupPassword");
+
+  // Toggle visibility
+  toggle.addEventListener("change", () => {
+    passwordInput.type = toggle.checked ? "text" : "password";
   });
 
-  // Live username preview
-  document.getElementById("firstName").addEventListener("input", updateUsername);
-  document.getElementById("title").addEventListener("change", updateUsername);
-
-  function updateUsername() {
-    const title = document.getElementById("title").value;
-    const firstName = document.getElementById("firstName").value.trim();
-    if (title && firstName) {
-      const username = `${title}.${firstName}`.replace(/\s+/g, '');
-      document.getElementById("usernameDisplay").textContent = `Your username will be: ${username}`;
+  // Live validation message
+  passwordInput.addEventListener("input", () => {
+    const len = passwordInput.value.length;
+    if (len < 8) {
+      passwordHelp.textContent = "Too short — must be at least 8 characters.";
+      passwordHelp.style.color = "red";
+    } else if (len > 20) {
+      passwordHelp.textContent = "Too long — maximum is 20 characters.";
+      passwordHelp.style.color = "red";
     } else {
-      document.getElementById("usernameDisplay").textContent = '';
+      passwordHelp.textContent = "Looks good ✅";
+      passwordHelp.style.color = "green";
     }
-  }
-
-  // Handle signup submission
-  document.getElementById("signupForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const title = document.getElementById("title").value;
-    const firstName = document.getElementById("firstName").value.trim();
-    const surname = document.getElementById("surname").value.trim();
-    const password = document.getElementById("signupPassword").value;
-
-    const username = `${title}.${firstName}`.replace(/\s+/g, '');
-
-    const teacher = { title, firstName, surname, password, username };
-
-    let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-    teachers.push(teacher);
-    localStorage.setItem("teachers", JSON.stringify(teachers));
-    localStorage.setItem("currentTeacher", JSON.stringify(teacher)); // Save session
-
-    alert(`✅ Profile created successfully!\nYour username is: ${username}`);
-    window.location.href = "teacher.html"; // Redirect
   });
-</script>
+  
+    // Live username preview
+    function updateUsername() {
+      const title     = document.getElementById("title").value;
+      const firstName = document.getElementById("firstName").value.trim();
+      const display   = document.getElementById("usernameDisplay");
+      if (title && firstName) {
+        display.textContent = "Your username will be: " +
+          `${title}.${firstName}`.replace(/\s+/g, '');
+      } else {
+        display.textContent = "";
+      }
+    }
+    document.getElementById("firstName").addEventListener("input", updateUsername);
+    document.getElementById("title").addEventListener("change", updateUsername);
+
+    // Handle signup
+    document.getElementById("signupForm")
+      .addEventListener("submit", function(e) {
+        e.preventDefault();
+        const title     = document.getElementById("title").value;
+        const firstName = document.getElementById("firstName").value.trim();
+        const surname   = document.getElementById("surname").value.trim();
+        const classId   = document.getElementById("classId").value.trim();
+        const password  = document.getElementById("signupPassword").value;
+        const username  = `${title}.${firstName}`.replace(/\s+/g, '');
+
+        const teacher = { title, firstName, surname, classId, password, username };
+
+        let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+        teachers.push(teacher);
+        localStorage.setItem("teachers", JSON.stringify(teachers));
+        localStorage.setItem("currentTeacher", JSON.stringify(teacher));
+
+        alert(`✅ Profile created!\nUsername: ${username}\nClass: ${classId}`);
+        window.location.href = "teacher.html";
+      });
+  </script>
 
 </body>
 </html>

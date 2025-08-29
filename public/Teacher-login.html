@@ -2,67 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>teacher-login</title>
+  <title>FRAMS – Teacher Login</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Top-right nav buttons */
-    .nav-buttons {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
-    }
 
-    .nav-button {
-      background-color: orange;
-      color: #333;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
+  /* Top-right nav buttons */
+  .nav-buttons {
+    position: absolute;top: 20px;right: 20px;display: flex;gap: 10px;
+  }
+  .nav-button{
+   background-color: orange;color: #333;padding: 10px 20px;
+   border-radius: 25px;
+   text-decoration: none;
+   font-weight: bold;
+   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+   transition: background-color 0.3s ease,transform 0.2s ease;
+  }
+   
+   .nav-button:hover
+    {background-color: orange;
+    transform: scale(1.05);
+  }
 
-    .nav-button:hover {
-      background-color: orange;
-      transform: scale(1.05);
-    }
+   /* Centered form wrapper */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 1rem; /* added breathing space so it doesn't stick to edges */
+}
 
-    /* Centered form container */
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-    }
-
-    .form-container {
-      width: 360px;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .form-container h2 {
+/* Form container - more horizontal */
+.form-container {
+  width: 550px;                /* wider but not full page */
+  max-width: 90%;              /* ensures it stays good on smaller screens */
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+     
+     .form-container h2{ 
       margin-bottom: 1rem;
+     
+     }
+     .form-container input, 
+     .form-container select {
+      width: 60%;
+     padding: 10px;
+     margin: 8px 0;
+     border-radius: 5px;
+     border: 1px solid #ccc;
+     box-sizing: border-box;
     }
-
-    .form-container input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .form-container button {
-      width: 100%;
+     
+     .form-container button {
+      width: 60%;
       padding: 12px;
       margin-top: 12px;
       background-color: orange;
@@ -71,69 +69,68 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
-    }
+      }
 
-    .form-container button:hover {
-      background-color: #005fa3;
-    }
+      .form-container button:hover {
+        background-color: #005fa3;
+        }
 
-    .toggle-container {
-      text-align: left;
-      font-size: 0.9rem;
-      color: #555;
-      margin: -4px 0 12px;
-    }
+        .center-header 
+        {text-align: center;
+        margin-bottom: 2rem;
+      }
+        .logo {
+          display: block;
+        margin: 0 auto 1rem auto;
+        max-height: 120px;
+      }
+        </style>
+        </head>
+        <body>
+<!-- Top-right buttons -->
+<div class="nav-buttons">
+  <a href="index.html" class="nav-button">🏠 Home</a><a href="Login-signup.html" class="nav-button">🔙 Back</a>
+</div>
 
-    .forgot-link {
-      display: block;
-      margin-top: 12px;
-      font-size: 0.9rem;
-      color: dodgerblue;
-      text-decoration: none;
-    }
 
-    .forgot-link:hover {
-      text-decoration: underline;
-    }
-
-    .center-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .logo {
-      display: block;
-      margin: 0 auto 1rem auto;
-      max-height: 120px;
-    }
   </style>
 </head>
-<body>
 
-  <!-- Top-right buttons -->
+<body>
+  <!-- nav pills -->
   <div class="nav-buttons">
     <a href="index.html" class="nav-button">🏠 Home</a>
     <a href="Login-signup.html" class="nav-button">🔙 Back</a>
   </div>
 
-  <!-- Centered form and header -->
   <div class="form-wrapper">
-    <header class="center-header">
-      <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
-      <h1>Welcome to FRAMS</h1>
-      <p>Facial Recognition Attendance Management System</p>
-    </header>
-
     <div class="form-container">
+      <header class="center-header">
+        <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
+        <h1>Welcome to FRAMS</h1>
+        <p>Facial Recognition Attendance Management System</p>
+      </header>
+
       <h2>🔐 Log In</h2>
       <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
+        <input type="text"     id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
+
+        <!-- Register Class as text input -->
+        <input
+          type="text"
+          id="classId"
+          placeholder="Register Class (e.g. 11A)"
+          required
+        >
+
         <div class="toggle-container">
           <label>
-            <input type="checkbox" id="togglePassword"> Show Password
+            <input type="checkbox" id="togglePassword">
+            Show Password
           </label>
         </div>
+
         <button type="submit">Log In</button>
         <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
       </form>
@@ -141,28 +138,54 @@
   </div>
 
   <script>
-  // Show/hide password
-  document.getElementById("togglePassword").addEventListener("change", function() {
-    document.getElementById("password").type = this.checked ? "text" : "password";
-  });
+    // Password toggle
+    document.getElementById("togglePassword")
+      .addEventListener("change", function() {
+        document.getElementById("password").type =
+          this.checked ? "text" : "password";
+      });
 
-  // Login logic
-  document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const pwd = document.getElementById("password").value.trim();
-    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+    // Login logic
+    document.getElementById("loginForm")
+      .addEventListener("submit", function(e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const pwd      = document.getElementById("password").value.trim();
+        const classId  = document.getElementById("classId").value.trim();
+        const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
 
-    const teacher = teachers.find(t => t.username === username && t.password === pwd);
+        const teacher = teachers.find(t =>
+          t.username === username &&
+          t.password === pwd
+        );
 
-    if (teacher) {
-      localStorage.setItem("currentTeacher", JSON.stringify(teacher));
-      alert("Welcome, " + teacher.Surname.Name + "!");
-      location.href = "teacher.html"; // ✅ Redirect to teacher.html
+        if (!teacher) {
+          return alert("❌ Invalid credentials.");
+        }
+
+        teacher.classId = classId;
+        localStorage.setItem("currentTeacher", JSON.stringify(teacher));
+        alert(`Welcome, ${teacher.title}.${teacher.firstName}!\nClass: ${classId}`);
+        window.location.href = "teacher.html";
+      });
+    
+  const passwordInput = document.querySelector('input[name="password"]');
+  const passwordHelp = document.getElementById('passwordHelp');
+
+  passwordInput.addEventListener('input', () => {
+    if (passwordInput.value.length < 8) {
+      passwordHelp.textContent = "Too short — must be at least 8 characters.";
+      passwordHelp.style.color = "red";
+    } else if (passwordInput.value.length > 20) {
+      passwordHelp.textContent = "Too long — maximum is 20 characters.";
+      passwordHelp.style.color = "red";
     } else {
-      alert("❌ Invalid credentials. Try again or click 'Forgot Password?'");
+      passwordHelp.textContent = "Looks good ✅";
+      passwordHelp.style.color = "green";
     }
   });
-</script>  
+</script>
+  </script>
+
 </body>
 </html>

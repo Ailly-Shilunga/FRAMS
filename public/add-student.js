@@ -68,7 +68,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
   const contact = document.getElementById('parentContact').value;
 
   const dobPattern = /^\d{4}\/\d{2}\/\d{2}$/;
-  const contactPattern = /^\+264\d{8}$/;
+  const contactPattern = /^\+264\d{9}$/;
 
   if (!dobPattern.test(dob)) {
     e.preventDefault();

@@ -39,8 +39,13 @@
 
 <!-- Parent Contact Number Field -->
 <label for="parentContact">Parent Contact Number</label>
-<input id="parentContact" type="tel" pattern="^\+264\d{8}$" placeholder="+264XXXXXXXX" required />
-<small>Format: +264 followed by 8 digits</small>
+<input
+  type="tel"
+  id="contact"
+  placeholder="Contact Number"
+  pattern="^[0-9+\-\s]{7,15}$"
+  required
+>
   
         <div class="camera">
           <video id="enroll-webcam" autoplay muted></video>
