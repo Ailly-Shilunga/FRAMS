@@ -1,11 +1,17 @@
 console.log("Hello from FRAMS!");
-git addconst express = require('express');
+
+const express = require('express');
+const path = require('path');
 const app = express();
 
+// Serve static files (HTML, JS, CSS, models, etc.)
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Welcome to FRAMS!');
+  res.sendFile(path.join(__dirname, 'public', 'live-attendance.html'));
 });
 
+
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});vvss
+  console.log('Server is running on http://localhost:3000');
+});

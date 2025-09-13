@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Face Detection Test</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f4f6f8; }
+    video, canvas { border: 2px solid #007acc; border-radius: 8px; }
+    .wrapper { position: relative; display: inline-block; }
+    canvas { position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <h1>📷 Face Detection Test</h1>
+  <p>If everything is working, you should see green boxes around faces.</p>
+
+  <div class="wrapper">
+    <video id="video" width="640" height="480" autoplay muted></video>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      console.log("Loading models...");
+      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+      console.log("✅ Models loaded");
+
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('overlay');
+
+      // Start webcam
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+        video.srcObject = stream;
+      } catch (err) {
+        alert("❌ Camera access denied: " + err);
+        return;
+      }
+
+      video.addEventListener('play', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        setInterval(async () => {
+          const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
+          const resized = faceapi.resizeResults(detections, { width: canvas.width, height: canvas.height });
+
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          resized.forEach(det => {
+            const { box } = det;
+            ctx.strokeStyle = 'green';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(box.x, box.y, box.width, box.height);
+          });
+
+          console.log(`Detected ${detections.length} face(s)`);
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>

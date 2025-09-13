@@ -7,21 +7,309 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     
-    /* Your existing styles */
+    /* existing styles */
     * { box-sizing: border-box; margin:0; padding:0; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
-      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+      background: linear-gradient(grey rga(255,255,255,0.9), rgba(255,255,255,0.9)), 
                   url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css") no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       line-height: 1.6;
-    }
-    
+    } 
+  
+    /* Reset & Base */
 
-    /* Header */
-    .center-header {
+.home-button,
+.back-button {
+  position: absolute;
+  right: 20px;
+  background-color: orange;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Top-right nav buttons */
+.nav-buttons {
+  position: absolute;    /* stays over content */
+  top: 20px;              /* distance from top */
+  right: 20px;            /* distance from right */
+  display: flex;          /* put them side-by-side */
+  gap: 10px;              /* space between buttons */
+  z-index: 1000;          /* keep above other elements */
+}
+
+.nav-button {
+  background-color: orange;
+  color: #333;
+  padding: 10px 20px;      /* smaller*/
+  border-radius: 25px;     /* slightly
+  font-size: 0.85rem;     
+  text-decoration: none;   /* remove underline */
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: linear-gradient(135deg, #fefefe 0%, #eaf4ff 50%, #fff4e5 100%);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Header */
+.center-header {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(to right, #ffffff, #fdf2e9);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 0.8rem;
+  max-width: 100px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.center-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: #ff7f00;
+}
+
+/* Main container */
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+/* Teacher info section */
+.teacher-info {
+  display: flex;
+  align-items: center;
+  background: rgba(245, 250, 255, 0.95);
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  gap: 15px;
+}
+
+.teacher-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7f00 0%, #ff9800 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.teacher-details h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.teacher-details p {
+  color: #666;
+}
+
+/* Logout button */
+.logout-btn {
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn:hover {
+  background: #e0e0e0;
+  color: #c00;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+  background: rgba(245, 250, 255, 0.95);
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.filter-group select,
+.filter-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  background: #ff7f00;
+  color: #fff;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.action-btn:hover {
+  background: #0077cc;
+}
+
+.action-btn.secondary {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.action-btn.secondary:hover {
+  background: #e0e0e0;
+}
+
+/* Attendance Grid */
+.attendance-container {
+  background: rgba(245, 250, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.attendance-header {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+  background: #0077cc;
+  color: white;
+  padding: 0.9rem 1.2rem;
+  font-weight: bold;
+}
+
+.attendance-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.attendance-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+  padding: 1rem 1.2rem;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.attendance-row:hover {
+  background: rgba(255, 165, 0, 0.05);
+}
+
+.student-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7f00 0%, #ff9800 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.status-present { background: rgba(46, 204, 113, 0.2); color: #27ae60; }
+.status-absent { background: rgba(231, 76, 60, 0.2); color: #c0392b; }
+.status-late { background: rgba(241, 196, 15, 0.2); color: #d35400; }
+
+.status-btn.active { background: #0077cc; color: white; }
+
+/* Cards */
+.card-icon { background: #ff7f00; }
+.card-icon.total { background: #0077cc; }
+.card-content h3 { color: #0056b3; }
+
+/* Nav Buttons */
+.nav-button,
+.home-button,
+.back-button {
+  background-color: #ff7f00;
+  color: white;
+}
+
+.nav-button:hover,
+.home-button:hover,
+.back-button:hover {
+  background-color: #0077cc;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .attendance-header, .attendance-row {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+  .student-id { display: none; }
+}
+@media (max-width: 768px) {
+  .attendance-header, .attendance-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .action-buttons { flex-direction: column; }
+}
+@media (max-width: 576px) {
+  .attendance-header, .attendance-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .teacher-info { flex-direction: column; text-align: center; }
+  .filters { flex-direction: column; }
+}
+/* Header */
+.center-header {
       text-align: center;
       padding: 1.5rem 1rem;
       color:#333;
@@ -373,55 +661,24 @@
         flex-direction: column;
       }
     }
-.home-button,
-.back-button {
-  position: absolute;
-  right: 20px;
-  background-color: orange;
-  color: #333;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
 
-/* Top-right nav buttons */
-.nav-buttons {
-  position: absolute;    /* stays over content */
-  top: 20px;              /* distance from top */
-  right: 20px;            /* distance from right */
-  display: flex;          /* put them side-by-side */
-  gap: 10px;              /* space between buttons */
-  z-index: 1000;          /* keep above other elements */
-}
-
-.nav-button {
-  background-color: orange;
-  color: #333;
-  padding: 10px 20px;      /* smaller*/
-  border-radius: 25px;     /* slightly
-  font-size: 0.85rem;     
-  text-decoration: none;   /* remove underline */
-  font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.nav-button:hover {
-  background-color: darkorange; /* slight hover change */
-  transform: scale(1.05);
-}
 
   </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Virtual Register</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
- <!-- Top-right nav buttons -->
-<div class="nav-buttons">
-  <a href="index.html" class="nav-button">🏠 Home</a>
-  <a href="javascript:history.back()" class="nav-button">🔙 Back</a>
-</div>
+
+  <!-- Top-right nav buttons -->
+  <div class="nav-buttons">
+    <a href="index.html" class="nav-button">🏠 Home</a>
+    <a href="#" id="backBtn" class="nav-button">🔙 Back</a>
+  </div>
 
   <!-- Header with logo -->
   <header class="center-header">
@@ -430,11 +687,7 @@
     <p>Facial Recognition Attendance Management System</p>
   </header>
 
-<main>
-<body>
-
-
-<main>
+  <main>
     <!-- Teacher information -->
     <div class="teacher-info">
       <div class="teacher-avatar" id="teacherInitials"></div>
@@ -484,7 +737,7 @@
       <button class="action-btn" id="refreshBtn">Refresh Attendance</button>
       <button class="action-btn" id="saveBtn">Save Changes</button>
       <button class="action-btn secondary" id="exportBtn">Export to PDF</button>
-      <button class="action-btn secondary" id="liveBtn">Start Live Attendance</button>
+      <a href="live-attendance.html" class="action-btn secondary">Start Live Attendance</a>
     </div>
 
     <!-- Summary Cards -->
@@ -503,6 +756,22 @@
       <div class="attendance-list" id="attendanceList"></div>
     </div>
   </main>
+
+  <script>
+    // Back button functionality
+    document.getElementById('backBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      history.back();
+    });
+
+    // Example button actions
+    document.getElementById('refreshBtn').addEventListener('click', () => location.reload());
+    document.getElementById('saveBtn').addEventListener('click', () => alert('Changes saved!'));
+    document.getElementById('exportBtn').addEventListener('click', () => alert('Exported to PDF!'));
+  </script>
+
+</body>
+</html>
 
 <script>
   

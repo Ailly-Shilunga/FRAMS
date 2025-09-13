@@ -2,66 +2,698 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FRAMS Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="add-student.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Student - FRAMS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: grey;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background:white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .nav-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .nav-button {
+      background-color: orange;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .nav-button:hover {
+      background-color: dodgerblue;
+      transform: scale(1.05);
+    }
+    .form-section {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .camera-section {
+      flex: 1;
+      text-align: center;
+    }
+    .form-fields {
+      flex: 1;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input:focus, select:focus {
+      border-color: #007acc;
+      outline: none;
+    }
+    video {
+      border: 2px solid #007acc;
+      border-radius: 8px;
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+    }
+    canvas {
+      border: 2px solid #28a745;
+      border-radius: 8px;
+      max-width: 300px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .btn {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #005a99;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .btn.success {
+      background-color: #28a745;
+    }
+    .btn.success:hover {
+      background-color: #1e7e34;
+    }
+    .btn.warning {
+      background-color: #ffc107;
+      color: #000;
+    }
+    .btn.warning:hover {
+      background-color: #e0a800;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-weight: bold;
+      text-align: center;
+    }
+    .status.info {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    .status.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .status.warning {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .student-list {
+      margin-top: 30px;
+    }
+    .student-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #f8f9fa;
+    }
+    .student-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: cover;
+      border: 2px solid #007acc;
+    }
+    .student-info {
+      flex: 1;
+    }
+    .student-name {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .student-details {
+      font-size: 14px;
+      color: #666;
+    }
+    .bulk-actions {
+      text-align: center;
+      margin: 20px 0;
+      padding: 20px;
+      background: #e9ecef;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation -->
+  <div class="nav-buttons">
+    <a href="index.html" class="nav-button">🏠 Home</a>
+    <a href="teacher.html" class="nav-button">🔙 Back</a>
+  </div>
 
-  <header class="center-header">
-    <img src="assets/logo.jpeg.jpg" alt="FRAMS Logo" class="logo">
-    <h1>Welcome to FRAMS</h1>
-    <p>Facial Recognition Attendance Management System</p>
-<body>
-  <a href="index.html" class="home-button">🏠Home</a>
-
-  <header>
-    <img src="asstes/logo.jpeg.jpeg" alt="">
-  </header>
-  
-  <main>
-    <div class="form-card">
-      <h2>Add New Student</h2>
-      <form id="add-student-form">
-        <label for="student-name">Name</label>
-        <input type="text" id="student-name" required>
-  
-        <label for="student-class">Class</label>
-        <input type="text" id="student-class" required>
-  
-        <label for="parent-email">Parent Email</label>
-        <input type="email" id="parent-email" required>
-
-        <!-- Date of Birth Field -->
-<label for="dob">Date of Birth</label>
-<input id="dob" type="date" pattern="\d{4}/\d{2}/\d{2}" required />
-<small>Format: YYYY/MM/DD</small>
-
-<!-- Parent Contact Number Field -->
-<label for="parentContact">Parent Contact Number</label>
-<input
-  type="tel"
-  id="contact"
-  placeholder="Contact Number"
-  pattern="^[0-9+\-\s]{7,15}$"
-  required
->
-  
-        <div class="camera">
-          <video id="enroll-webcam" autoplay muted></video>
-          <canvas id="enroll-snapshot" class="hidden"></canvas>
-        </div>
-  
-        <button type="button" id="capture-enroll">📸 Capture Photo</button>
-        <button type="submit">💾 Save Student</button>
-      </form>
+  <div class="container">
+    <div class="header">
+      <h1>👨‍🎓 Add New Student</h1>
+      <p>Capture student photo and download automatically for face recognition</p>
     </div>
-  
-    <div class="form-card">
-      <h2>Enrolled Students</h2>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status info hidden">
+      📷 Camera ready - Click "Capture Photo" to take a picture
+    </div>
+
+    <!-- Main Form Section -->
+    <form id="add-student-form">
+      <div class="form-section">
+        <!-- Camera Section -->
+        <div class="camera-section">
+          <h3>📸 Student Photo</h3>
+          <video id="enroll-webcam" autoplay muted playsinline></video>
+          <canvas id="enroll-snapshot" class="hidden"></canvas>
+          <div style="margin-top: 15px;">
+            <button type="button" id="capture-enroll" class="btn">📷 Capture Photo</button>
+            <button type="button" id="retake-photo" class="btn warning hidden">🔄 Retake Photo</button>
+          </div>
+          <div id="camera-status" class="status info" style="margin-top: 10px;">
+            🔄 Initializing camera...
+          </div>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="form-fields">
+          <h3>📋 Student Information</h3>
+          
+          <div class="form-group">
+            <label for="student-name">Full Name *</label>
+            <input type="text" id="student-name" required placeholder="Enter student's full name">
+          </div>
+
+          <div class="form-group">
+            <label for="student-class">Class *</label>
+            <select id="student-class" required>
+              <option value="">Select Class</option>
+              <!-- Grade 8 Classes -->
+              <optgroup label="Grade 8">
+                <option value="8A">8A</option>
+                <option value="8B">8B</option>
+                <option value="8C">8C</option>
+                <option value="8D">8D</option>
+                <option value="8E">8E</option>
+                <option value="8F">8F</option>
+              </optgroup>
+              <!-- Grade 9 Classes -->
+              <optgroup label="Grade 9">
+                <option value="9A">9A</option>
+                <option value="9B">9B</option>
+                <option value="9C">9C</option>
+                <option value="9D">9D</option>
+                <option value="9E">9E</option>
+                <option value="9F">9F</option>
+              </optgroup>
+              <!-- Grade 10 Classes -->
+              <optgroup label="Grade 10">
+                <option value="10A">10A</option>
+                <option value="10B">10B</option>
+                <option value="10C">10C</option>
+                <option value="10D">10D</option>
+                <option value="10E">10E</option>
+                <option value="10F">10F</option>
+                <option value="10G">10G</option>
+                <option value="10H">10H</option>
+                <option value="10I">10I</option>
+              </optgroup>
+              <!-- Grade 11 Classes -->
+              <optgroup label="Grade 11">
+                <option value="11A">11A</option>
+                <option value="11B">11B</option>
+                <option value="11C">11C</option>
+                <option value="11D">11D</option>
+                <option value="11E">11E</option>
+                <option value="11F">11F</option>
+              </optgroup>
+              <!-- Grade 12 Classes -->
+              <optgroup label="Grade 12">
+                <option value="12A">12A</option>
+                <option value="12B">12B</option>
+                <option value="12C">12C</option>
+                <option value="12D">12D</option>
+                <option value="12E">12E</option>
+                <option value="12F">12F</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="parent-email">Parent/Guardian Email *</label>
+            <input type="email" id="parent-email" required placeholder="parent@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="text" id="dob" placeholder="YYYY/MM/DD" pattern="\\d{4}/\\d{2}/\\d{2}">
+          </div>
+
+          <div class="form-group">
+            <label for="parentContact">Parent Contact</label>
+            <input type="text" id="parentContact" placeholder="+264XXXXXXXXX" pattern="\\+264\\d{8}">
+          </div>
+
+          <div class="form-group">
+            <label for="student-id">Student ID (Auto-generated)</label>
+            <input type="text" id="student-id" readonly placeholder="Will be generated automatically">
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div style="text-align: center; margin-top: 20px;">
+        <button type="submit" class="btn success" style="font-size: 16px; padding: 15px 30px;">
+          ✅ Enroll Student & Download Photo
+        </button>
+      </div>
+    </form>
+
+    <!-- Bulk Actions -->
+    <div class="bulk-actions">
+      <h3>📥 Bulk Actions</h3>
+      <p>Manage existing student photos and migrate to file system</p>
+      <button id="download-all" class="btn warning">📥 Download All Student Photos</button>
+      <button id="migrate-filesystem" class="btn">🔄 Migrate to File System</button>
+      <button id="clear-storage" class="btn" style="background-color: #dc3545;">🗑️ Clear All Data</button>
+    </div>
+
+    <!-- Student List -->
+    <div class="student-list">
+      <h3>👥 Enrolled Students</h3>
       <ul id="student-list"></ul>
     </div>
-  </main>
+  </div>
 
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    // DOM references
+    const videoEl = document.getElementById('enroll-webcam');
+    const canvasEl = document.getElementById('enroll-snapshot');
+    const ctx = canvasEl.getContext('2d');
+    const capBtn = document.getElementById('capture-enroll');
+    const retakeBtn = document.getElementById('retake-photo');
+    const form = document.getElementById('add-student-form');
+    const listEl = document.getElementById('student-list');
+    const statusEl = document.getElementById('statusMessage');
+    const cameraStatusEl = document.getElementById('camera-status');
+    const studentIdEl = document.getElementById('student-id');
+
+    // Bulk action buttons
+    const downloadAllBtn = document.getElementById('download-all');
+    const migrateBtn = document.getElementById('migrate-filesystem');
+    const clearBtn = document.getElementById('clear-storage');
+
+    let students = JSON.parse(localStorage.getItem('students') || '[]');
+    let snapshot = '';
+    let stream = null;
+
+    // Generate student ID
+    function generateStudentId() {
+      return Date.now();
+    }
+
+    // Update status message
+    function showStatus(message, type = 'info') {
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`;
+      statusEl.classList.remove('hidden');
+      
+      // Auto-hide success messages
+      if (type === 'success') {
+        setTimeout(() => {
+          statusEl.classList.add('hidden');
+        }, 5000);
+      }
+    }
+
+    // Update camera status
+    function setCameraStatus(message, type = 'info') {
+      cameraStatusEl.textContent = message;
+      cameraStatusEl.className = `status ${type}`;
+    }
+
+    // Initialize camera
+    async function initCamera() {
+      try {
+        setCameraStatus('🔄 Requesting camera access...', 'info');
+        
+        const constraints = {
+          video: {
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: 'user'
+          }
+        };
+        
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoEl.srcObject = stream;
+        
+        videoEl.addEventListener('loadedmetadata', () => {
+          setCameraStatus('✅ Camera ready - Click "Capture Photo"', 'success');
+          capBtn.disabled = false;
+        });
+        
+      } catch (error) {
+        console.error('Camera error:', error);
+        if (error.name === 'NotAllowedError') {
+          setCameraStatus('❌ Camera access denied. Please allow camera access.', 'error');
+        } else if (error.name === 'NotFoundError') {
+          setCameraStatus('❌ No camera found. Please connect a camera.', 'error');
+        } else {
+          setCameraStatus('❌ Camera error: ' + error.message, 'error');
+        }
+        capBtn.disabled = true;
+      }
+    }
+
+    // Capture photo
+    capBtn.addEventListener('click', () => {
+      if (!videoEl.videoWidth || !videoEl.videoHeight) {
+        showStatus('❌ Camera not ready. Please wait for camera to load.', 'error');
+        return;
+      }
+      
+      canvasEl.width = videoEl.videoWidth;
+      canvasEl.height = videoEl.videoHeight;
+      ctx.drawImage(videoEl, 0, 0);
+      snapshot = canvasEl.toDataURL('image/png');
+      
+      // Show captured image
+      canvasEl.classList.remove('hidden');
+      retakeBtn.classList.remove('hidden');
+      capBtn.textContent = '✅ Photo Captured';
+      capBtn.disabled = true;
+      
+      setCameraStatus('✅ Photo captured successfully!', 'success');
+      showStatus('📸 Photo captured! Fill in the details and click "Enroll Student"', 'success');
+      
+      // Generate and display student ID
+      const newId = generateStudentId();
+      studentIdEl.value = newId;
+    });
+
+    // Retake photo
+    retakeBtn.addEventListener('click', () => {
+      canvasEl.classList.add('hidden');
+      retakeBtn.classList.add('hidden');
+      capBtn.textContent = '📷 Capture Photo';
+      capBtn.disabled = false;
+      snapshot = '';
+      studentIdEl.value = '';
+      
+      setCameraStatus('📷 Ready to capture new photo', 'info');
+      showStatus('📷 Ready to capture a new photo', 'info');
+    });
+
+    // Download student image
+    function downloadStudentImage(studentId, studentName, imageData) {
+      const link = document.createElement('a');
+      link.download = `${studentId}.jpg`;
+      link.href = imageData;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log(`📥 Downloaded: ${studentId}.jpg for ${studentName}`);
+    }
+
+    // Render student list
+    function renderList() {
+      listEl.innerHTML = '';
+      
+      if (!students.length) {
+        listEl.innerHTML = '<li style="text-align: center; color: #666; padding: 20px;">No students enrolled yet.</li>';
+        return;
+      }
+      
+      students.forEach(student => {
+        const li = document.createElement('li');
+        li.className = 'student-item';
+        
+        const img = document.createElement('img');
+        img.className = 'student-image';
+        
+        // Try to load from assets/faces folder first, fallback to Base64
+        img.src = `./assets/faces/${student.id}.jpg`;
+        img.onerror = () => {
+          img.src = student.face || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNEREQiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjOTk5Ij4KPHA+VXNlcjwvcD4KPC9zdmc+Cjwvc3ZnPg==';
+        };
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'student-info';
+        
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'student-name';
+        nameDiv.textContent = student.name;
+        
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'student-details';
+        detailsDiv.innerHTML = `
+          <strong>Class:</strong> ${student.class}<br>
+          <strong>Parent:</strong> ${student.parentEmail}<br>
+          <strong>ID:</strong> ${student.id}
+        `;
+        
+        infoDiv.appendChild(nameDiv);
+        infoDiv.appendChild(detailsDiv);
+        
+        const actionsDiv = document.createElement('div');
+        actionsDiv.style.cssText = 'display: flex; flex-direction: column; gap: 5px;';
+        
+        const redownloadBtn = document.createElement('button');
+        redownloadBtn.textContent = '📥 Download';
+        redownloadBtn.className = 'btn';
+        redownloadBtn.style.fontSize = '12px';
+        redownloadBtn.style.padding = '5px 10px';
+        redownloadBtn.onclick = () => {
+          if (student.face) {
+            downloadStudentImage(student.id, student.name, student.face);
+            showStatus(`📥 Downloaded photo for ${student.name}`, 'success');
+          } else {
+            showStatus(`❌ No photo data available for ${student.name}`, 'error');
+          }
+        };
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '🗑️ Delete';
+        deleteBtn.className = 'btn';
+        deleteBtn.style.backgroundColor = '#dc3545';
+        deleteBtn.style.fontSize = '12px';
+        deleteBtn.style.padding = '5px 10px';
+        deleteBtn.onclick = () => {
+          if (confirm(`Delete ${student.name}?`)) {
+            students = students.filter(s => s.id !== student.id);
+            localStorage.setItem('students', JSON.stringify(students));
+            renderList();
+            showStatus(`🗑️ Deleted ${student.name}`, 'warning');
+          }
+        };
+        
+        actionsDiv.appendChild(redownloadBtn);
+        actionsDiv.appendChild(deleteBtn);
+        
+        li.appendChild(img);
+        li.appendChild(infoDiv);
+        li.appendChild(actionsDiv);
+        listEl.appendChild(li);
+      });
+    }
+
+    // Handle form submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('student-name').value.trim();
+      const cls = document.getElementById('student-class').value.trim();
+      const email = document.getElementById('parent-email').value.trim();
+      const dob = document.getElementById('dob').value.trim();
+      const contact = document.getElementById('parentContact').value.trim();
+
+      // Validation
+      if (!name || !cls || !email) {
+        showStatus('❌ Please fill in all required fields (marked with *)', 'error');
+        return;
+      }
+      
+      if (!snapshot) {
+        showStatus('❌ Please capture a photo first', 'error');
+        return;
+      }
+
+      // Validate DOB format if provided
+      if (dob && !/^\d{4}\/\d{2}\/\d{2}$/.test(dob)) {
+        showStatus('❌ Date of Birth must be in YYYY/MM/DD format', 'error');
+        return;
+      }
+
+      // Validate contact format if provided
+      if (contact && !/^\+264\d{8}$/.test(contact)) {
+        showStatus('❌ Parent contact must start with +264 and be followed by 8 digits', 'error');
+        return;
+      }
+
+      const studentId = parseInt(studentIdEl.value) || generateStudentId();
+      
+      const newStudent = {
+        id: studentId,
+        name,
+        class: cls,
+        classId: cls, // For compatibility
+        parentEmail: email,
+        dob: dob || null,
+        parentContact: contact || null,
+        face: snapshot,
+        enrolledDate: new Date().toISOString()
+      };
+
+      // Save to localStorage
+      students.push(newStudent);
+      localStorage.setItem('students', JSON.stringify(students));
+
+      // Automatically download the photo
+      downloadStudentImage(studentId, name, snapshot);
+
+      // Show success message with instructions
+      showStatus(
+        `✅ ${name} enrolled successfully! Photo downloaded as "${studentId}.jpg" - Please move it to your /assets/faces/ folder for face recognition.`, 
+        'success'
+      );
+
+      // Reset form
+      form.reset();
+      canvasEl.classList.add('hidden');
+      retakeBtn.classList.add('hidden');
+      capBtn.textContent = '📷 Capture Photo';
+      capBtn.disabled = false;
+      snapshot = '';
+      studentIdEl.value = '';
+      setCameraStatus('📷 Ready to capture photo for next student', 'info');
+
+      // Update list
+      renderList();
+    });
+
+    // Bulk download all images
+    downloadAllBtn.addEventListener('click', () => {
+      if (!students.length) {
+        showStatus('❌ No students to download images for', 'error');
+        return;
+      }
+      
+      let downloaded = 0;
+      const studentsWithPhotos = students.filter(s => s.face);
+      
+      if (!studentsWithPhotos.length) {
+        showStatus('❌ No student photos available to download', 'error');
+        return;
+      }
+      
+      studentsWithPhotos.forEach((student, index) => {
+        setTimeout(() => {
+          downloadStudentImage(student.id, student.name, student.face);
+          downloaded++;
+          
+          if (downloaded === studentsWithPhotos.length) {
+            showStatus(
+              `📥 Downloaded ${downloaded} student photos. Please move all files to your /assets/faces/ folder.`, 
+              'success'
+            );
+          }
+        }, index * 500); // Stagger downloads
+      });
+    });
+
+    // Migrate to file system
+    migrateBtn.addEventListener('click', () => {
+      const confirm = window.confirm(
+        'This will remove Base64 image data from localStorage and use file references instead.\n\n' +
+        'Make sure you have downloaded all student images to /assets/faces/ folder first!\n\n' +
+        'Continue?'
+      );
+      
+      if (confirm) {
+        students.forEach(student => {
+          if (student.face && student.face.startsWith('data:image')) {
+            student.face = `./assets/faces/${student.id}.jpg`;
+          }
+        });
+        
+        localStorage.setItem('students', JSON.stringify(students));
+        showStatus('✅ Migration complete! Students now use file system references.', 'success');
+        renderList();
+      }
+    });
+
+    // Clear all data
+    clearBtn.addEventListener('click', () => {
+      const confirm = window.confirm(
+        'This will delete ALL student data and cannot be undone!\n\n' +
+        'Are you sure you want to continue?'
+      );
+      
+      if (confirm) {
+        localStorage.removeItem('students');
+        students = [];
+        showStatus('🗑️ All student data cleared', 'warning');
+        renderList();
+      }
+    });
+
+    // Initialize
+    await initCamera();
+    renderList();
+  });
+  </script>
 </body>
 </html>
