@@ -29,7 +29,7 @@
         }
         
         .nav-button {
-            background:orange;
+            background: orange;
             color: #333;
             padding: 10px 20px;
             border-radius: 50px;
@@ -37,6 +37,7 @@
             font-weight: 600;
             font-size: 0.85rem;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
         
@@ -61,7 +62,7 @@
         }
         
         .teacher-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 25px;
@@ -75,7 +76,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: dodgerblue;
             color: white;
             display: flex;
             align-items: center;
@@ -382,8 +383,8 @@
 </head>
 <body>
     <div class="nav-buttons">
-        <a href="teacher.html" class="nav-button">Dashboard</a>
-        <a href="index.html" class="nav-button">Home</a>
+        <a href="teacher.html" class="nav-button">👩🏾‍🏫Dashboard</a>
+        <a href="index.html" class="nav-button">🏡Home</a>
     </div>
 
     <div class="main-container">
@@ -407,17 +408,12 @@
                 Initializing face recognition system...
             </div>
 
-            <div class="debug-info" id="debug-info">
-                <h4>System Debug Information:</h4>
-                <div id="debug-log">Starting system initialization...</div>
-            </div>
-
             <div class="controls">
                 <button id="start-btn" class="btn btn-primary" disabled>
-                    Start Camera
+                    📸Start Camera
                 </button>
                 <button id="stop-btn" class="btn btn-danger" disabled>
-                    Stop Camera
+                    ⏹️Stop Camera
                 </button>
             </div>
 
@@ -461,7 +457,102 @@
         </div>
     </div>
 
-    <script>
+    <script> 
+    function setStatus(message, type) {
+    console.log(`Status: ${message} (${type})`);
+}
+
+const DEBUG_MODE = false;
+
+function debugMsg(message) {
+    if (DEBUG_MODE) {
+        const timestamp = new Date().toLocaleTimeString();
+        console.log(`[${timestamp}] ${message}`);
+    }
+}
+
+initializeSystem();
+
+const faceAPIUrls = [
+    'https://cdnjs.cloudflare.com/ajax/libs/face-api.js/0.22.2/face-api.min.js',
+    'https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js',
+    'https://unpkg.com/face-api.js@0.22.2/dist/face-api.min.js'
+];
+
+async function loadFaceAPIScript() {
+    for (const url of faceAPIUrls) {
+        try {
+            debugMsg(`📦 Trying to load face-api.js from: ${url}`);
+            const script = document.createElement('script');
+            script.src = url;
+            document.head.appendChild(script);
+            
+            await new Promise((resolve, reject) => {
+                script.onload = resolve;
+                script.onerror = reject;
+            });
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            if (typeof faceapi !== 'undefined') {
+                debugMsg('✅ face-api.js loaded successfully');
+                return;
+            }
+        } catch (error) {
+            debugMsg(`❌ Failed to load from ${url}`);
+        }
+    }
+    throw new Error('Failed to load face-api.js');
+}
+
+async function loadModels() {
+    try {
+        setStatus('Loading face recognition models...', 'loading');
+        debugMsg('📦 Starting face-api.js initialization...');
+        
+        await loadFaceAPIScript();
+        
+        debugMsg('📦 Loading models from CDN (this takes a moment)...');
+        
+        // Use CDN and wait longer
+        const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
+        
+        debugMsg('🔍 Loading from GitHub CDN...');
+        await Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+            faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+            faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+        ]);
+
+        debugMsg('✅ All models loaded successfully from CDN!');
+        setStatus('Models loaded!', 'ready');
+        
+    } catch (error) {
+        debugMsg(`❌ Model loading error: ${error.message}`);
+        
+        // FALLBACK - continue without models for now
+        debugMsg('⚠️ Continuing without face recognition models');
+        setStatus('Running without face recognition', 'warning');
+    }
+}
+
+// 2. Then your initialization:
+async function initializeSystem() {
+    try {
+        debugMsg('🚀 Starting FRAMS Live Attendance System...');
+        debugMsg('✅ Teacher logged in: Lydia Daniel');
+        debugMsg('✅ Teacher class: 11B');
+        
+        await loadModels();
+        loadStudentsForClass();
+        await processFaceDescriptors();
+        
+    } catch (error) {
+        debugMsg(`❌ System failed: ${error.message}`);
+    }
+}
+
+// 3. Start it:
+initializeSystem();
         // Global variables
         let video, canvas, ctx;
         let stream;
@@ -484,12 +575,9 @@
         const debugLog = document.getElementById('debug-log');
 
         // Debug logging function
-        function debugMsg(message) {
-            console.log(message);
-            const timestamp = new Date().toLocaleTimeString();
-            debugLog.innerHTML += `<br>[${timestamp}] ${message}`;
-            debugLog.scrollTop = debugLog.scrollHeight;
-        }
+       function debugMsg(message) {
+    console.log(message);
+}
 
         // Initialize system
         document.addEventListener('DOMContentLoaded', async () => {
@@ -525,30 +613,7 @@
             document.getElementById("teacherInitials").textContent = (teacher.firstName[0] + teacher.surname[0]).toUpperCase();
             document.getElementById("classInfo").textContent = `Class: ${teacher.classId}`;
         }
-
-        // Load face-api models
-        async function loadModels() {
-            try {
-                setStatus('Loading face recognition models...', 'loading');
-                debugMsg('📦 Loading face-api.js models from ./models directory...');
-                
-                const MODEL_URL = './models';
-                
-                await Promise.all([
-                    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-                    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-                    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-                ]);
-
-                debugMsg('✅ All face-api.js models loaded successfully');
-                setStatus('Models loaded successfully!', 'ready');
-                
-            } catch (error) {
-                debugMsg(`❌ Model loading error: ${error.message}`);
-                setStatus('Error loading models. Check /models folder.', 'error');
-            }
-        }
-
+  
         // Load students for current teacher
         async function loadStudentsForTeacher() {
             try {
@@ -874,4 +939,55 @@
 
         // Render recognized list
         function renderRecognizedList() {
-            const sessions = Object.
+            const sessions = Object.values(attendanceSession)
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            if (sessions.length === 0) {
+                recognizedList.innerHTML = '<p style="text-align: center; color: #666; font-style: italic;">No students recognized yet</p>';
+                return;
+            }
+
+            recognizedList.innerHTML = sessions.map(session => `
+                <div class="student-item">
+                    <div class="student-avatar-small">
+                        ${session.student.name[0]}${session.student.surname ? session.student.surname[0] : ''}
+                    </div>
+                    <div class="student-details">
+                        <div class="student-name">${session.student.name}</div>
+                        <div class="student-time">Recognized at ${session.time}</div>
+                    </div>
+                    <div class="confidence">${Math.round(session.confidence * 100)}%</div>
+                </div>
+            `).join('');
+        }
+
+        // Save attendance session
+        function saveAttendanceSession() {
+            try {
+                let attendance = JSON.parse(localStorage.getItem("attendance")) || {};
+                
+                Object.entries(attendanceSession).forEach(([studentId, session]) => {
+                    attendance[studentId] = {
+                        status: "Present",
+                        time: session.time,
+                        timestamp: session.timestamp,
+                        confidence: Math.round(session.confidence * 100),
+                        method: "Face Recognition"
+                    };
+                });
+                
+                localStorage.setItem("attendance", JSON.stringify(attendance));
+                debugMsg(`✅ Saved attendance for ${Object.keys(attendanceSession).length} students to localStorage`);
+                
+            } catch (error) {
+                debugMsg(`❌ Error saving attendance: ${error.message}`);
+            }
+        }
+
+        // Set status message
+        function setStatus(message, type) {
+    console.log(`Status: ${message} (${type})`);
+}
+    </script>
+</body>
+</html>
